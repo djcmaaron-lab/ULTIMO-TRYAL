@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <style>
 /* ============================================
-   GOOD CALL TRAVEL - OVERLAY STYLES v1.1
+   GOOD CALL TRAVEL - OVERLAY STYLES v2.0
    ============================================ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -58,7 +58,7 @@ body {
     z-index: 2;
 }
 
-/* VIDEO SECTION - CON ESPACIO ARRIBA PARA TIKTOK UI */
+/* VIDEO SECTION */
 .video-section {
     margin-top: 180px;
     margin-bottom: 12px;
@@ -99,31 +99,19 @@ body {
 }
 
 .video-overlay-top {
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
+    top: 0; left: 0; right: 0; height: 40px;
 }
 
 .video-overlay-bottom {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
+    bottom: 0; left: 0; right: 0; height: 50px;
 }
 
 .video-overlay-left {
-    top: 40px;
-    left: 0;
-    bottom: 50px;
-    width: 15px;
+    top: 40px; left: 0; bottom: 50px; width: 15px;
 }
 
 .video-overlay-right {
-    top: 40px;
-    right: 0;
-    bottom: 50px;
-    width: 15px;
+    top: 40px; right: 0; bottom: 50px; width: 15px;
 }
 
 .video-placeholder::before {
@@ -147,7 +135,7 @@ body {
     50% { transform: scale(1.1); opacity: 0.6; }
 }
 
-/* AVISOS - MÁS ABAJO Y CERCA DEL CONTENIDO */
+/* AVISOS */
 .avisos-section {
     background: transparent;
     padding: 0;
@@ -462,7 +450,6 @@ body {
 @keyframes boardFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
 /* UTILITIES */
-
 .fade-in { animation: fadeIn 0.6s ease-in; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -474,7 +461,7 @@ body {
     </div>
 
     <div class="container">
-        <!-- VIDEO PLACEHOLDER - MÁS ALTO Y MÁS ABAJO -->
+        <!-- VIDEO SECTION -->
         <div class="video-section" id="videoSection">
             <div class="video-placeholder">
                 <iframe 
@@ -483,7 +470,6 @@ body {
                     allow="autoplay; encrypted-media" 
                     allowfullscreen>
                 </iframe>
-                <!-- Overlays para ocultar elementos de YouTube -->
                 <div class="video-overlay-top"></div>
                 <div class="video-overlay-bottom"></div>
                 <div class="video-overlay-left"></div>
@@ -491,7 +477,7 @@ body {
             </div>
         </div>
 
-        <!-- AVISOS FIJOS - RUC Y WSP -->
+        <!-- AVISOS -->
         <div class="avisos-section" id="avisosContainer">
             <div class="aviso-ruc">
                 <div class="aviso-text">💎 RUC EMPRESARIAL: 20606424761</div>
@@ -508,12 +494,10 @@ body {
                 </div>
             </div>
         </div>
-
-
     </div>
 
-<!-- AUDIO DE CLOUDFLARE (controlado por el panel) -->
-<audio id="cloudflareAudio" loop>
+<!-- AUDIO DE CLOUDFLARE - autoplay + loop -->
+<audio id="cloudflareAudio" autoplay loop preload="auto">
     <source src="https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav" type="audio/wav">
 </audio>
 
@@ -665,145 +649,54 @@ function rotateNext() {
     setTimeout(rotateNext, getDuration(step.type));
 }
 
-// INIT
-rotateNext();
-
-console.log('=== Sistema iniciado ===');
-
 // ============================================
-// SISTEMA DE COMUNICACIÓN CON CONTROLADOR
+// AUDIO INITIALIZATION
 // ============================================
 
-var youtubeIframe = document.getElementById('youtubeVideo');
+// 1. Audio de Cloudflare - reproducir automáticamente
 var cfAudio = document.getElementById('cloudflareAudio');
+cfAudio.volume = 0.5; // 50% volumen
 
-// Escuchar comandos del controlador via localStorage
-window.addEventListener('storage', function(e) {
-    if (e.key !== 'overlayCommand') return;
-    
-    try {
-        var command = JSON.parse(e.newValue);
-        console.log('Comando recibido:', command);
-        
-        // Ejecutar comando
-        if (command.target === 'youtube' && youtubeIframe) {
-            executeYouTubeCommand(command.action, command.value);
-        } else if (command.target === 'cloudflare' && cfAudio) {
-            executeCloudflareCommand(command.action, command.value);
-        } else if (command.target === 'general') {
-            executeGeneralCommand(command.action, command.value);
-        }
-        
-        // Enviar confirmación
-        localStorage.setItem('overlayStatus', JSON.stringify({
-            timestamp: Date.now(),
-            message: 'Comando ejecutado: ' + command.action
-        }));
-    } catch(err) {
-        console.error('Error procesando comando:', err);
-    }
+// Intentar reproducir inmediatamente
+cfAudio.play().then(function() {
+    console.log('[AUDIO] Cloudflare audio reproduciendo OK');
+}).catch(function(err) {
+    console.log('[AUDIO] Cloudflare primer intento falló:', err.message);
+    // Reintentar cada 2 segundos (por si el navegador necesita un momento)
+    var retryCount = 0;
+    var retryInterval = setInterval(function() {
+        retryCount++;
+        cfAudio.play().then(function() {
+            console.log('[AUDIO] Cloudflare audio reproduciendo OK (intento ' + retryCount + ')');
+            clearInterval(retryInterval);
+        }).catch(function(e) {
+            console.log('[AUDIO] Cloudflare reintento ' + retryCount + ' falló:', e.message);
+            if (retryCount >= 10) {
+                console.log('[AUDIO] Cloudflare: se agotaron los reintentos');
+                clearInterval(retryInterval);
+            }
+        });
+    }, 2000);
 });
 
-// Funciones para ejecutar comandos de YouTube
-function executeYouTubeCommand(action, value) {
-    if (!youtubeIframe || !youtubeIframe.contentWindow) return;
-    
-    var message = '';
-    
-    switch(action) {
-        case 'play':
-            message = '{"event":"command","func":"playVideo","args":[]}';
-            break;
-        case 'pause':
-            message = '{"event":"command","func":"pauseVideo","args":[]}';
-            break;
-        case 'restart':
-            youtubeIframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[0,true]}', '*');
-            message = '{"event":"command","func":"playVideo","args":[]}';
-            break;
-        case 'volume':
-            message = '{"event":"command","func":"setVolume","args":[' + value + ']}';
-            break;
-        case 'mute':
-            message = '{"event":"command","func":"mute","args":[]}';
-            break;
-        case 'unmute':
-            message = '{"event":"command","func":"unMute","args":[]}';
-            break;
-    }
-    
-    if (message) {
-        youtubeIframe.contentWindow.postMessage(message, '*');
-        console.log('YouTube comando enviado:', action);
-    }
-}
+// 2. YouTube - arrancar muted, luego unmute con volumen bajo
+var ytIframe = document.getElementById('youtubeVideo');
 
-// Funciones para ejecutar comandos de Cloudflare
-function executeCloudflareCommand(action, value) {
-    if (!cfAudio) return;
-    
-    switch(action) {
-        case 'play':
-            cfAudio.play()
-                .then(() => console.log('Cloudflare audio playing'))
-                .catch(err => console.error('Error playing:', err));
-            break;
-        case 'stop':
-            cfAudio.pause();
-            cfAudio.currentTime = 0;
-            break;
-        case 'volume':
-            cfAudio.volume = value / 100;
-            break;
-        case 'mute':
-            cfAudio.muted = true;
-            break;
-        case 'unmute':
-            cfAudio.muted = false;
-            break;
-    }
-    
-    console.log('Cloudflare comando ejecutado:', action);
-}
-
-// Funciones para comandos generales
-function executeGeneralCommand(action, value) {
-    switch(action) {
-        case 'muteAll':
-            if (youtubeIframe) executeYouTubeCommand('mute');
-            if (cfAudio) cfAudio.muted = true;
-            break;
-        case 'unmuteAll':
-            if (youtubeIframe) executeYouTubeCommand('unmute');
-            if (cfAudio) cfAudio.muted = false;
-            break;
-    }
-    
-    console.log('Comando general ejecutado:', action);
-}
-
-// Inicializar audio de Cloudflare
-if (cfAudio) {
-    cfAudio.volume = 0.5;
-}
-
-// Unmute YouTube después de que arranque
 setTimeout(function() {
-    if (youtubeIframe && youtubeIframe.contentWindow) {
-        console.log('Activando sonido de YouTube...');
-        youtubeIframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":[]}', '*');
-        youtubeIframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[30]}', '*');
-        console.log('YouTube: unmute y volumen a 30');
+    if (ytIframe && ytIframe.contentWindow) {
+        // Unmute
+        ytIframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":[]}', '*');
+        // Volumen al 30%
+        ytIframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[30]}', '*');
+        console.log('[AUDIO] YouTube: unmute + volumen 30');
     }
-}, 2000);
+}, 3000);
 
-// Notificar que el overlay está listo
-localStorage.setItem('overlayStatus', JSON.stringify({
-    timestamp: Date.now(),
-    message: 'Overlay iniciado y listo'
-}));
-
-console.log('Sistema de comunicación activado');
+// ============================================
+// INIT
+// ============================================
+rotateNext();
+console.log('=== Good Call Travel Overlay v2.0 iniciado ===');
 </script>
 </body>
 </html>
