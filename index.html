@@ -512,11 +512,6 @@ body {
 
     </div>
 
-<!-- AUDIO EN BUCLE -->
-<audio id="backgroundAudio" loop autoplay>
-    <source src="https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav" type="audio/wav">
-</audio>
-
 <script>
 // ============================================
 // CONFIG
@@ -668,80 +663,10 @@ function rotateNext() {
 // INIT
 rotateNext();
 
-// DEBUG DEL AUDIO CON CONSOLE Y ALERT
-console.log('=== INICIANDO DEBUG DE AUDIO ===');
-alert('Iniciando audio de Cloudflare...');
+console.log('=== Sistema iniciado ===');
 
-var audio = document.getElementById('backgroundAudio');
-console.log('Audio element:', audio);
-
-if (!audio) {
-    alert('ERROR: No se encontró el elemento de audio');
-    console.error('Audio element NO encontrado');
-} else {
-    alert('Audio element ENCONTRADO');
-    
-    var source = audio.querySelector('source');
-    console.log('Source:', source);
-    
-    if (!source) {
-        alert('ERROR: No hay source en el audio');
-    } else {
-        alert('Source encontrado: ' + source.src.substring(0, 60));
-        console.log('Source URL:', source.src);
-    }
-    
-    // Configurar
-    audio.volume = 0.5;
-    audio.loop = true;
-    
-    // Eventos
-    audio.addEventListener('loadstart', function() {
-        console.log('→ loadstart');
-        alert('Audio: loadstart');
-    });
-    
-    audio.addEventListener('canplay', function() {
-        console.log('✓ canplay');
-        alert('Audio: canplay - LISTO!');
-    });
-    
-    audio.addEventListener('error', function(e) {
-        var errorCode = audio.error ? audio.error.code : 'unknown';
-        var errorMsg = audio.error ? audio.error.message : 'unknown';
-        console.error('✗ Error:', errorCode, errorMsg);
-        alert('ERROR Audio: ' + errorCode + ' - ' + errorMsg);
-    });
-    
-    audio.addEventListener('playing', function() {
-        console.log('♪ PLAYING!');
-        alert('Audio REPRODUCIENDO!!!');
-    });
-    
-    // Cargar
-    console.log('Llamando a audio.load()...');
-    audio.load();
-    
-    // Intentar reproducir
-    setTimeout(function() {
-        console.log('Intentando audio.play()...');
-        alert('Intentando play()...');
-        
-        var playPromise = audio.play();
-        
-        if (playPromise !== undefined) {
-            playPromise.then(function() {
-                console.log('✓✓✓ PLAY EXITOSO ✓✓✓');
-                alert('PLAY EXITOSO!!!');
-            }).catch(function(error) {
-                console.error('✗ Play error:', error);
-                alert('ERROR en play(): ' + error.name + ' - ' + error.message);
-            });
-        } else {
-            alert('playPromise es undefined');
-        }
-    }, 1500);
-}
+// El audio de Cloudflare NO puede reproducirse automáticamente por políticas del navegador
+// Solo usaremos el audio de YouTube
 
 // Unmute YouTube después de que arranque
 setTimeout(function() {
@@ -749,9 +674,10 @@ setTimeout(function() {
     if (iframe && iframe.contentWindow) {
         console.log('Activando sonido de YouTube...');
         iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":[]}', '*');
-        iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[20]}', '*');
+        iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[30]}', '*');
+        console.log('YouTube: unmute y volumen a 30');
     }
-}, 3000);
+}, 2000);
 </script>
 </body>
 </html>
