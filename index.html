@@ -478,7 +478,7 @@ body {
         <div class="video-section" id="videoSection">
             <div class="video-placeholder">
                 <iframe 
-                    src="https://www.youtube.com/embed/GksJ96z0xyE?autoplay=1&mute=1&loop=1&playlist=GksJ96z0xyE&controls=0&modestbranding=1&rel=0" 
+                    src="https://www.youtube.com/embed/GksJ96z0xyE?autoplay=1&mute=0&loop=1&playlist=GksJ96z0xyE&controls=0&modestbranding=1&rel=0" 
                     allow="autoplay; encrypted-media" 
                     allowfullscreen>
                 </iframe>
@@ -667,29 +667,85 @@ function rotateNext() {
 // INIT
 rotateNext();
 
-// REPRODUCIR AUDIO AUTOMÁTICAMENTE - SIN NECESIDAD DE CLICK
-setTimeout(function() {
-    var audio = document.getElementById('backgroundAudio');
-    if (audio) {
-        audio.volume = 0.7;
-        audio.muted = false;
-        
-        // Intentar reproducir
+// REPRODUCIR AUDIO DE CLOUDFLARE CON LOGS
+console.log('=== INICIANDO SISTEMA DE AUDIO ===');
+
+var audio = document.getElementById('backgroundAudio');
+console.log('Audio element:', audio);
+
+if (audio) {
+    console.log('Audio encontrado, verificando source...');
+    console.log('Audio src:', audio.querySelector('source').src);
+    
+    // Configurar audio
+    audio.volume = 0.7;
+    audio.loop = true;
+    
+    console.log('Intentando cargar audio...');
+    audio.load();
+    
+    // Evento cuando el audio está listo
+    audio.addEventListener('canplay', function() {
+        console.log('✓ Audio cargado y listo para reproducir');
+    });
+    
+    // Evento cuando el audio está cargando
+    audio.addEventListener('loadstart', function() {
+        console.log('→ Cargando audio desde Cloudflare...');
+    });
+    
+    // Evento de error
+    audio.addEventListener('error', function(e) {
+        console.error('✗ ERROR al cargar audio:', e);
+        console.error('Audio error code:', audio.error ? audio.error.code : 'unknown');
+        console.error('Audio error message:', audio.error ? audio.error.message : 'unknown');
+    });
+    
+    // Evento cuando empieza a reproducir
+    audio.addEventListener('playing', function() {
+        console.log('♪ AUDIO REPRODUCIENDO ♪');
+    });
+    
+    // Evento cuando se pausa
+    audio.addEventListener('pause', function() {
+        console.log('⏸ Audio pausado');
+    });
+    
+    // Intentar reproducir después de un delay
+    setTimeout(function() {
+        console.log('Intentando reproducir audio...');
         var playPromise = audio.play();
         
         if (playPromise !== undefined) {
             playPromise.then(function() {
-                console.log('Audio reproduciendo automáticamente');
+                console.log('✓✓✓ AUDIO REPRODUCIENDO EXITOSAMENTE ✓✓✓');
             }).catch(function(error) {
-                console.log('Error al reproducir audio:', error);
-                // Forzar reproducción después de un momento
+                console.error('✗✗✗ ERROR al reproducir:', error);
+                console.log('Reintentando en 2 segundos...');
+                
+                // Segundo intento
                 setTimeout(function() {
-                    audio.play();
-                }, 1000);
+                    console.log('Segundo intento de reproducción...');
+                    audio.play().then(function() {
+                        console.log('✓ Segundo intento exitoso');
+                    }).catch(function(err) {
+                        console.error('✗ Segundo intento falló:', err);
+                        
+                        // Tercer intento
+                        setTimeout(function() {
+                            console.log('Tercer intento...');
+                            audio.play();
+                        }, 2000);
+                    });
+                }, 2000);
             });
         }
-    }
-}, 500);
+    }, 1000);
+} else {
+    console.error('✗✗✗ NO SE ENCONTRÓ EL ELEMENTO DE AUDIO ✗✗✗');
+}
+
+console.log('=== SISTEMA DE AUDIO CONFIGURADO ===');
 </script>
 </body>
 </html>
