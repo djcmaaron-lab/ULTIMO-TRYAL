@@ -218,7 +218,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 0px;
 }
 
 .dynamic-content {
@@ -479,7 +479,7 @@ body {
             <div class="video-placeholder">
                 <iframe 
                     id="youtubeVideo"
-                    src="https://www.youtube.com/embed/GksJ96z0xyE?autoplay=1&mute=0&loop=1&playlist=GksJ96z0xyE&controls=0&modestbranding=1&rel=0&enablejsapi=1" 
+                    src="https://www.youtube.com/embed/GksJ96z0xyE?autoplay=1&mute=0&loop=1&playlist=GksJ96z0xyE&controls=0&modestbranding=1&rel=0&enablejsapi=1&volume=15" 
                     allow="autoplay; encrypted-media" 
                     allowfullscreen>
                 </iframe>
@@ -668,73 +668,91 @@ function rotateNext() {
 // INIT
 rotateNext();
 
-// MOSTRAR LOGS EN PANTALLA CON ALERT
-function showLog(msg) {
-    console.log(msg);
-    // Crear div de log visible
-    var logDiv = document.createElement('div');
-    logDiv.style.cssText = 'position:fixed;top:10px;left:10px;background:black;color:lime;padding:5px;font-size:12px;z-index:99999;max-width:300px;';
-    logDiv.textContent = msg;
-    document.body.appendChild(logDiv);
-    setTimeout(function() { logDiv.remove(); }, 3000);
+// FUNCIÓN PARA ENVIAR LOGS A RAILWAY
+function logToServer(message) {
+    fetch('/log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: message })
+    }).catch(function() {});
 }
 
-showLog('=== INICIANDO SISTEMA DE AUDIO ===');
+logToServer('=== INICIANDO SISTEMA DE AUDIO ===');
 
+// REPRODUCIR AUDIO DE CLOUDFLARE
 var audio = document.getElementById('backgroundAudio');
-showLog('Audio element: ' + (audio ? 'ENCONTRADO' : 'NO ENCONTRADO'));
+logToServer('Audio element encontrado: ' + (audio ? 'SI' : 'NO'));
 
 if (audio) {
     var source = audio.querySelector('source');
-    showLog('Audio src: ' + (source ? source.src.substring(0, 50) + '...' : 'NO SOURCE'));
+    logToServer('Source encontrado: ' + (source ? 'SI' : 'NO'));
+    logToServer('Audio URL: ' + (source ? source.src : 'N/A'));
     
-    // Configurar audio
-    audio.volume = 0.3; // Volumen bajo
+    audio.volume = 0.5;
     audio.loop = true;
     
-    showLog('Cargando audio...');
-    audio.load();
-    
-    audio.addEventListener('canplay', function() {
-        showLog('✓ Audio LISTO para reproducir');
+    audio.addEventListener('loadstart', function() {
+        logToServer('Audio: Empezando a cargar');
     });
     
-    audio.addEventListener('loadstart', function() {
-        showLog('→ Cargando desde Cloudflare...');
+    audio.addEventListener('canplay', function() {
+        logToServer('Audio: LISTO para reproducir');
     });
     
     audio.addEventListener('error', function(e) {
-        showLog('✗ ERROR: ' + (audio.error ? audio.error.code : 'unknown'));
+        logToServer('Audio ERROR - Code: ' + (audio.error ? audio.error.code : 'unknown'));
+        logToServer('Audio ERROR - Message: ' + (audio.error ? audio.error.message : 'unknown'));
     });
     
     audio.addEventListener('playing', function() {
-        showLog('♪ REPRODUCIENDO ♪');
+        logToServer('Audio: REPRODUCIENDO AHORA!!!');
     });
     
-    // Intentar reproducir
+    audio.addEventListener('pause', function() {
+        logToServer('Audio: PAUSADO');
+    });
+    
+    audio.addEventListener('stalled', function() {
+        logToServer('Audio: STALLED (sin datos)');
+    });
+    
+    logToServer('Cargando audio...');
+    audio.load();
+    
     setTimeout(function() {
-        showLog('Intentando play()...');
+        logToServer('Intentando play()...');
         var playPromise = audio.play();
         
         if (playPromise !== undefined) {
             playPromise.then(function() {
-                showLog('✓✓✓ ÉXITO ✓✓✓');
+                logToServer('✓✓✓ PLAY EXITOSO ✓✓✓');
             }).catch(function(error) {
-                showLog('✗ Error: ' + error.message);
+                logToServer('✗ Play falló: ' + error.name + ' - ' + error.message);
                 
                 // Segundo intento
                 setTimeout(function() {
-                    showLog('Reintentando...');
+                    logToServer('Segundo intento...');
                     audio.play().catch(function(err) {
-                        showLog('✗ Fallo 2: ' + err.message);
+                        logToServer('✗ Segundo intento falló: ' + err.message);
                     });
                 }, 2000);
             });
+        } else {
+            logToServer('playPromise es undefined');
         }
     }, 1000);
 } else {
-    showLog('✗✗✗ AUDIO ELEMENT NO EXISTE ✗✗✗');
+    logToServer('✗✗✗ AUDIO ELEMENT NO EXISTE ✗✗✗');
 }
+
+// BAJAR VOLUMEN DE YOUTUBE
+setTimeout(function() {
+    var iframe = document.getElementById('youtubeVideo');
+    if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[20]}', '*');
+        logToServer('YouTube: Volumen bajado a 20');
+    }
+}, 2000);
 </script>
 </body>
 </html>
