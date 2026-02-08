@@ -8,154 +8,157 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
+            background: #0a0a0a; color: #fff;
+            min-height: 100vh; padding: 16px;
         }
-        h1 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #FFC107;
-        }
+        h1 { text-align: center; font-size: 22px; margin-bottom: 16px; color: #FFC107; }
         .section {
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 16px;
-            border: 1px solid #333;
+            background: #1a1a1a; border-radius: 12px;
+            padding: 16px; margin-bottom: 12px; border: 1px solid #333;
         }
         .section h2 {
-            font-size: 16px;
-            color: #aaa;
-            margin-bottom: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 14px; color: #aaa; margin-bottom: 12px;
+            text-transform: uppercase; letter-spacing: 1px;
         }
-        .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        .row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
         button {
-            padding: 14px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.1s, opacity 0.1s;
-            flex: 1;
-            min-width: 120px;
+            padding: 12px 16px; border: none; border-radius: 8px;
+            font-size: 14px; font-weight: 700; cursor: pointer;
+            transition: transform 0.1s, opacity 0.1s; flex: 1; min-width: 80px;
         }
-        button:active {
-            transform: scale(0.95);
-            opacity: 0.8;
-        }
+        button:active { transform: scale(0.95); opacity: 0.8; }
         .btn-play { background: #4CAF50; color: white; }
         .btn-stop { background: #f44336; color: white; }
         .btn-action { background: #2196F3; color: white; }
         .btn-mute { background: #FF9800; color: white; }
-        
-        .volume-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 12px;
+        .btn-seek { background: #9C27B0; color: white; }
+
+        .slider-row {
+            display: flex; align-items: center; gap: 10px; margin-top: 8px;
         }
-        .volume-row label {
-            font-size: 14px;
-            color: #aaa;
-            min-width: 60px;
+        .slider-row label { font-size: 13px; color: #888; min-width: 55px; }
+        .slider-row input[type="range"] {
+            flex: 1; height: 6px; -webkit-appearance: none;
+            background: #333; border-radius: 3px; outline: none;
         }
-        .volume-row input[type="range"] {
-            flex: 1;
-            height: 8px;
-            -webkit-appearance: none;
-            background: #333;
-            border-radius: 4px;
-            outline: none;
+        .slider-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 20px; height: 20px;
+            border-radius: 50%; background: #FFC107; cursor: pointer;
         }
-        .volume-row input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            background: #FFC107;
-            cursor: pointer;
-        }
-        .volume-row span {
-            font-size: 14px;
-            min-width: 40px;
-            text-align: right;
-            color: #FFC107;
-        }
-        
+        .slider-row span { font-size: 13px; min-width: 45px; text-align: right; color: #FFC107; }
+
         #status {
-            text-align: center;
-            padding: 10px;
-            font-size: 13px;
-            color: #666;
-            margin-top: 10px;
+            text-align: center; padding: 8px; font-size: 12px; color: #444; margin-top: 8px;
         }
         #status.ok { color: #4CAF50; }
         #status.err { color: #f44336; }
+
+        .timeline-display {
+            text-align: center; font-size: 12px; color: #666; margin-top: 4px;
+        }
     </style>
 </head>
 <body>
-    <h1>🎮 CONTROLADOR OVERLAY</h1>
+    <h1>🎮 CONTROL OVERLAY</h1>
 
-    <!-- CLOUDFLARE AUDIO -->
+    <!-- AUDIO (YouTube oculto) -->
     <div class="section">
-        <h2>🎵 Audio Cloudflare (WAV)</h2>
-        <div class="buttons">
-            <button class="btn-play" onclick="send('cloudflare','play')">▶ Reproducir</button>
-            <button class="btn-stop" onclick="send('cloudflare','stop')">⏹ Detener</button>
+        <h2>🎵 Audio (YouTube)</h2>
+        <div class="row">
+            <button class="btn-play" onclick="send('audio','play')">▶ Play</button>
+            <button class="btn-stop" onclick="send('audio','pause')">⏸ Pause</button>
+            <button class="btn-action" onclick="send('audio','restart')">🔁 Reiniciar</button>
         </div>
-        <div class="volume-row">
+        <div class="row">
+            <button class="btn-seek" onclick="send('audio','seek', Math.max(0, audioTime - 15))">⏪ -15s</button>
+            <button class="btn-seek" onclick="send('audio','seek', Math.max(0, audioTime - 5))">⏪ -5s</button>
+            <button class="btn-seek" onclick="send('audio','seek', audioTime + 5)">⏩ +5s</button>
+            <button class="btn-seek" onclick="send('audio','seek', audioTime + 15)">⏩ +15s</button>
+        </div>
+        <div class="slider-row">
             <label>Volumen:</label>
-            <input type="range" min="0" max="100" value="50" id="cfVol" oninput="send('cloudflare','volume',this.value); document.getElementById('cfVolLabel').textContent=this.value+'%'">
-            <span id="cfVolLabel">50%</span>
+            <input type="range" min="0" max="100" value="50" id="audioVol"
+                oninput="send('audio','volume',+this.value); document.getElementById('audioVolLabel').textContent=this.value+'%'">
+            <span id="audioVolLabel">50%</span>
+        </div>
+        <div class="slider-row">
+            <label>Posición:</label>
+            <input type="range" min="0" max="3600" value="0" id="audioSeek"
+                oninput="audioTime=+this.value; document.getElementById('audioSeekLabel').textContent=fmtTime(this.value)"
+                onchange="send('audio','seek',+this.value)">
+            <span id="audioSeekLabel">0:00</span>
+        </div>
+        <div class="row" style="margin-top:6px;">
+            <button class="btn-mute" onclick="send('audio','mute')">🔇 Mute</button>
+            <button class="btn-play" onclick="send('audio','unmute')">🔊 Unmute</button>
         </div>
     </div>
 
-    <!-- YOUTUBE -->
+    <!-- VIDEO (YouTube visible) -->
     <div class="section">
-        <h2>📺 YouTube</h2>
-        <div class="buttons">
-            <button class="btn-play" onclick="send('youtube','play')">▶ Play</button>
-            <button class="btn-stop" onclick="send('youtube','pause')">⏸ Pause</button>
-            <button class="btn-action" onclick="send('youtube','restart')">🔁 Restart</button>
+        <h2>📺 Video (YouTube)</h2>
+        <div class="row">
+            <button class="btn-play" onclick="send('video','play')">▶ Play</button>
+            <button class="btn-stop" onclick="send('video','pause')">⏸ Pause</button>
+            <button class="btn-action" onclick="send('video','restart')">🔁 Reiniciar</button>
         </div>
-        <div class="buttons" style="margin-top:10px;">
-            <button class="btn-mute" onclick="send('youtube','mute')">🔇 Mute</button>
-            <button class="btn-play" onclick="send('youtube','unmute')">🔊 Unmute</button>
+        <div class="row">
+            <button class="btn-seek" onclick="send('video','seek', Math.max(0, videoTime - 15))">⏪ -15s</button>
+            <button class="btn-seek" onclick="send('video','seek', Math.max(0, videoTime - 5))">⏪ -5s</button>
+            <button class="btn-seek" onclick="send('video','seek', videoTime + 5)">⏩ +5s</button>
+            <button class="btn-seek" onclick="send('video','seek', videoTime + 15)">⏩ +15s</button>
         </div>
-        <div class="volume-row">
+        <div class="slider-row">
             <label>Volumen:</label>
-            <input type="range" min="0" max="100" value="30" id="ytVol" oninput="send('youtube','volume',this.value); document.getElementById('ytVolLabel').textContent=this.value+'%'">
-            <span id="ytVolLabel">30%</span>
+            <input type="range" min="0" max="100" value="30" id="videoVol"
+                oninput="send('video','volume',+this.value); document.getElementById('videoVolLabel').textContent=this.value+'%'">
+            <span id="videoVolLabel">30%</span>
+        </div>
+        <div class="slider-row">
+            <label>Posición:</label>
+            <input type="range" min="0" max="3600" value="0" id="videoSeek"
+                oninput="videoTime=+this.value; document.getElementById('videoSeekLabel').textContent=fmtTime(this.value)"
+                onchange="send('video','seek',+this.value)">
+            <span id="videoSeekLabel">0:00</span>
+        </div>
+        <div class="row" style="margin-top:6px;">
+            <button class="btn-mute" onclick="send('video','mute')">🔇 Mute</button>
+            <button class="btn-play" onclick="send('video','unmute')">🔊 Unmute</button>
         </div>
     </div>
 
-    <div id="status">Esperando conexión...</div>
+    <div id="status">Conectando...</div>
 
     <script>
     var statusEl = document.getElementById('status');
-    
+    var audioTime = 0;
+    var videoTime = 0;
+
+    function fmtTime(s) {
+        s = Math.round(+s);
+        var m = Math.floor(s / 60);
+        var sec = s % 60;
+        return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
     function send(target, action, value) {
         var body = { target: target, action: action };
-        if (value !== undefined) body.value = parseInt(value);
-        
+        if (value !== undefined) body.value = Math.round(+value);
+
+        // Actualizar tracker local
+        if (action === 'seek') {
+            if (target === 'audio') audioTime = body.value;
+            if (target === 'video') videoTime = body.value;
+        }
+
         fetch('/command', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body)
         })
         .then(function(r) { return r.json(); })
-        .then(function(data) {
-            statusEl.textContent = '✅ ' + target + ' → ' + action + (value ? ' (' + value + ')' : '') + ' — ' + new Date().toLocaleTimeString();
+        .then(function() {
+            statusEl.textContent = '✅ ' + target + ' → ' + action + (value !== undefined ? ' (' + (action === 'seek' ? fmtTime(value) : value) + ')' : '') + ' — ' + new Date().toLocaleTimeString();
             statusEl.className = 'ok';
         })
         .catch(function(err) {
@@ -163,17 +166,21 @@
             statusEl.className = 'err';
         });
     }
-    
-    // Verificar conexión al servidor
-    fetch('/command')
-        .then(function() {
-            statusEl.textContent = '✅ Conectado al servidor';
-            statusEl.className = 'ok';
-        })
-        .catch(function() {
-            statusEl.textContent = '❌ No se puede conectar al servidor';
-            statusEl.className = 'err';
-        });
+
+    // Incrementar tiempo local cada segundo (aproximado)
+    setInterval(function() {
+        audioTime++;
+        videoTime++;
+    }, 1000);
+
+    // Check conexión
+    fetch('/command').then(function() {
+        statusEl.textContent = '✅ Conectado al servidor';
+        statusEl.className = 'ok';
+    }).catch(function() {
+        statusEl.textContent = '❌ No se puede conectar';
+        statusEl.className = 'err';
+    });
     </script>
 </body>
 </html>
