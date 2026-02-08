@@ -1,166 +1,809 @@
-// ============================================
-// GOOD CALL TRAVEL - OVERLAY CONFIG v1.0
-// ============================================
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080, height=1920">
+    <title>Good Call Travel - Overlay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <style>
+/* ============================================
+   GOOD CALL TRAVEL - OVERLAY STYLES v1.0
+   ============================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-// ============================================
-// TIEMPOS DE ROTACIÓN
-// ============================================
-const FLYER_DURATION = 8000;        // Flyers de destinos (8s)
-const MEDIA_DURATION = 8000;        // Fotos empresa/equipo (8s)
-const BOARD_DURATION = 30000;       // Tablero aeropuerto (30s)
-const COMPANY_INFO_DURATION = 10000; // Rotación avisos empresa (10s)
+body {
+    width: 1080px;
+    height: 1920px;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(180deg, #001F3F 0%, #003D7A 50%, #001F3F 100%);
+    overflow: hidden;
+    position: relative;
+}
 
+.bg-waves {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.12;
+    z-index: 0;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 40%, #FFC107 50%, transparent 60%);
+    animation: wave 20s linear infinite;
+}
+
+.wave:nth-child(2) {
+    animation-delay: -7s;
+    opacity: 0.5;
+}
+
+@keyframes wave {
+    0% { transform: rotate(0deg) translateX(-50%); }
+    100% { transform: rotate(360deg) translateX(-50%); }
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    position: relative;
+    z-index: 2;
+}
+
+/* TOP SECTION */
+.top-section {
+    background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
+    border-radius: 25px;
+    padding: 32px 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    margin-bottom: 15px;
+    border: 3px solid rgba(255, 193, 7, 0.5);
+    position: relative;
+}
+
+.main-title {
+    font-size: 56px;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    margin-bottom: 12px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.main-title::after {
+    content: '|';
+    position: absolute;
+    right: 0;
+    color: #FFC107;
+    opacity: 0;
+}
+
+.main-title.typing {
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 4s steps(30, end) forwards;
+}
+
+.main-title.typing::after {
+    animation: blink 0.8s step-end infinite;
+    opacity: 1;
+}
+
+.main-title.glow {
+    animation: powerGlow 3s ease-in-out forwards;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes powerGlow {
+    0% { text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+    20%, 80% {
+        text-shadow:
+            0 0 20px rgba(255, 193, 7, 1),
+            0 0 40px rgba(255, 193, 7, 0.8),
+            0 0 60px rgba(255, 193, 7, 0.6),
+            0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    100% { text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+}
+
+.agency-name {
+    font-size: 42px;
+    font-weight: 800;
+    color: #FFC107;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255, 193, 7, 0.6), 0 3px 10px rgba(0, 0, 0, 0.4);
+    letter-spacing: 3px;
+}
+
+/* INSTRUCTIONS */
+.instructions {
+    background: rgba(255, 193, 7, 0.15);
+    border-radius: 12px;
+    padding: 20px 22px;
+    border: 2px solid rgba(255, 193, 7, 0.4);
+}
+
+.instructions h3 {
+    font-size: 34px;
+    color: #FFC107;
+    margin-bottom: 14px;
+    font-weight: 800;
+    text-align: center;
+}
+
+.example-correct {
+    background: rgba(37, 211, 102, 0.2);
+    border: 2px solid #25D366;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.example-text {
+    font-size: 36px;
+    color: white;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.warning-box {
+    color: #FFFFFF;
+    font-size: 26px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #FF1744 0%, #D50000 100%);
+    padding: 12px;
+    border-radius: 8px;
+    border: 3px solid #FFFFFF;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(255, 23, 68, 0.6);
+}
+
+/* AVISOS */
+.avisos-section {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.aviso-ruc {
+    background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
+    border-radius: 15px;
+    padding: 18px 14px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(100, 181, 246, 0.6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    max-height: 120px;
+    overflow: hidden;
+    position: relative;
+}
+
+.aviso-ruc::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(100, 181, 246, 0.1) 50%, transparent 70%);
+    animation: shine 3s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.aviso-ruc .aviso-username {
+    font-size: 28px;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 6px;
+    animation: fadeInSlow 1s ease-in-out;
+    line-height: 1.2;
+}
+
+.aviso-ruc .aviso-text {
+    font-size: 42px;
+    font-weight: 900;
+    color: #E3F2FD;
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+    letter-spacing: 1px;
+    animation: fadeInSlow 1s ease-in-out;
+    line-height: 1.2;
+}
+
+.mincetur-logo {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
+}
+
+@keyframes fadeInSlow {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* MIDDLE SECTION */
+.middle-section {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+    margin-bottom: 8px;
+}
+
+.flights-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.dynamic-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.inciting-message, .example-intro {
+    font-size: 48px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 40px rgba(255, 193, 7, 1), 0 4px 15px rgba(0, 0, 0, 0.6);
+    animation: pulseIntro 2s ease-in-out infinite;
+    text-align: center;
+}
+
+@keyframes pulseIntro {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 40px rgba(255, 193, 7, 1); }
+    50% { transform: scale(1.03); text-shadow: 0 0 60px rgba(255, 193, 7, 1), 0 0 100px rgba(255, 193, 7, 0.5); }
+}
+
+/* DESTINATION CARD */
+.destination-card {
+    width: 100%;
+    max-width: calc(100% - 20px);
+    background: linear-gradient(145deg, rgba(0, 86, 179, 0.98) 0%, rgba(0, 45, 90, 0.98) 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    border: 3px solid rgba(255, 193, 7, 0.8);
+    animation: destinationEnter 0.8s ease-out;
+}
+
+@keyframes destinationEnter {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.destination-image { width: 100%; height: 400px; object-fit: cover; }
+
+.destination-info { padding: 25px; text-align: center; }
+
+.destination-name {
+    font-size: 52px;
+    font-weight: 900;
+    color: #FFC107;
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+}
+
+.destination-price {
+    font-size: 64px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+}
+
+.destination-note {
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+/* TEAM IMAGE */
+.team-image-container {
+    width: 100%;
+    max-width: calc(100% - 20px);
+    aspect-ratio: 9/16;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    border: 3px solid rgba(255, 193, 7, 0.6);
+}
+
+.team-image-container img { width: 100%; height: 100%; object-fit: cover; }
+
+/* AIRPORT BOARD */
+.airport-board {
+    width: 100%;
+    max-width: calc(100% - 20px);
+    background: linear-gradient(180deg, rgba(0, 10, 25, 0.97) 0%, rgba(0, 20, 45, 0.97) 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 193, 7, 0.2);
+    border: 3px solid rgba(255, 193, 7, 0.7);
+    animation: boardEnter 0.8s ease-out;
+    position: relative;
+}
+
+.airport-board::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.008) 3px, rgba(255,255,255,0.008) 4px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.airport-board::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.6), transparent);
+    animation: boardScan 4s linear infinite;
+    z-index: 2;
+}
+
+@keyframes boardScan { 0% { top: 0; opacity: 1; } 100% { top: 100%; opacity: 0.3; } }
+@keyframes boardEnter { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+.board-header {
+    background: linear-gradient(135deg, #FFC107 0%, #FFB300 100%);
+    padding: 22px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    z-index: 3;
+}
+
+.board-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: #001F3F;
+    letter-spacing: 3px;
+}
+
+.board-columns {
+    display: flex;
+    align-items: center;
+    padding: 14px 30px;
+    background: rgba(255, 193, 7, 0.08);
+    border-bottom: 2px solid rgba(255, 193, 7, 0.15);
+    position: relative;
+    z-index: 3;
+}
+
+.board-col-label {
+    font-size: 16px;
+    font-weight: 800;
+    color: rgba(255, 193, 7, 0.6);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.board-col-label.dest { flex: 1; }
+.board-col-label.price { width: 240px; text-align: right; }
+
+.board-rows {
+    padding: 8px 0;
+    position: relative;
+    z-index: 3;
+}
+
+.board-row {
+    display: flex;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: rowSlideIn 0.5s ease-out forwards;
+}
+
+.board-row:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+.board-row:last-child { border-bottom: none; }
+
+@keyframes rowSlideIn { to { opacity: 1; transform: translateX(0); } }
+
+.board-row-dest { flex: 1; display: flex; align-items: center; gap: 18px; }
+.board-emoji { font-size: 38px; width: 50px; text-align: center; flex-shrink: 0; }
+
+.board-city {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #FFFFFF;
+    letter-spacing: 1px;
+}
+
+.board-code {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: rgba(255, 193, 7, 0.5);
+    letter-spacing: 2px;
+    margin-left: 8px;
+}
+
+.board-row-price { width: 240px; text-align: right; display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; }
+
+.board-currency { font-size: 24px; font-weight: 700; color: rgba(255, 193, 7, 0.8); }
+
+.board-amount {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 44px;
+    font-weight: 900;
+    color: #FFC107;
+    text-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+    letter-spacing: 1px;
+}
+
+.board-page-indicator { display: flex; justify-content: center; gap: 10px; padding: 12px 0 6px; position: relative; z-index: 3; }
+
+.board-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255, 193, 7, 0.2);
+    transition: all 0.4s ease;
+}
+
+.board-dot.active {
+    background: #FFC107;
+    box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
+    transform: scale(1.3);
+}
+
+.board-footer {
+    background: rgba(255, 193, 7, 0.06);
+    border-top: 2px solid rgba(255, 193, 7, 0.15);
+    padding: 16px 30px;
+    text-align: center;
+    position: relative;
+    z-index: 3;
+}
+
+.board-footer-text { font-size: 20px; font-weight: 700; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; }
+
+.board-rows.fade-out { animation: boardFadeOut 0.4s ease-out forwards; }
+.board-rows.fade-in { animation: boardFadeIn 0.4s ease-in forwards; }
+
+@keyframes boardFadeOut { to { opacity: 0; transform: translateY(-10px); } }
+@keyframes boardFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* BOTTOM SECTION */
+.bottom-section {
+    background: linear-gradient(135deg, rgba(37, 211, 102, 0.95) 0%, rgba(34, 193, 93, 0.95) 100%);
+    border-radius: 22px;
+    padding: 20px 30px;
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+    animation: whatsappGlow 3s ease-in-out infinite;
+}
+
+.bottom-section::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.15) 50%, transparent 70%);
+    animation: whatsappShine 4s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes whatsappGlow {
+    0%, 100% { box-shadow: 0 8px 35px rgba(0, 0, 0, 0.4); }
+    50% { box-shadow: 0 12px 50px rgba(37, 211, 102, 0.6), 0 0 60px rgba(37, 211, 102, 0.3); }
+}
+
+@keyframes whatsappShine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.whatsapp-title {
+    font-size: 38px; font-weight: 900; color: white;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    position: relative; z-index: 1;
+}
+
+.whatsapp-number {
+    font-size: 46px; font-weight: 900; color: white;
+    letter-spacing: 2px;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    animation: numberPulse 2s ease-in-out infinite;
+    position: relative; z-index: 1;
+}
+
+@keyframes numberPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+.fade-in { animation: fadeIn 0.6s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="bg-waves">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+
+    <div class="container">
+        <div class="top-section">
+            <h1 class="main-title">✈️ COTIZA TU VUELO EN VIVO ✈️</h1>
+            <h2 class="agency-name">GOOD CALL TRAVEL</h2>
+            <div class="instructions">
+                <h3>📝 ESCRIBE ASÍ (TODO EN 1 COMENTARIO):</h3>
+                <div class="example-correct">
+                    <div class="example-text">De Lima a Cusco, 20 de febrero, 2 personas</div>
+                </div>
+                <div class="warning-box">⚠️ ¡NO ESCRIBAS POR SEPARADO!</div>
+            </div>
+        </div>
+
+        <div class="avisos-section" id="avisosContainer">
+            <div class="aviso-ruc">
+                <div class="aviso-username">AGENCIA CERTIFICADA</div>
+                <div class="aviso-text">RUC: 20606424761</div>
+            </div>
+        </div>
+
+        <div class="middle-section">
+            <div class="flights-wrapper" id="displayContainer">
+                <div class="dynamic-content">
+                    <div class="inciting-message">🔥 ¡COMENTA TU VUELO AHORA!</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-section">
+            <span class="whatsapp-title">📱 WhatsApp:</span>
+            <span class="whatsapp-number">961 737 795</span>
+        </div>
+    </div>
+
+<script>
 // ============================================
-// IMÁGENES (IMGUR)
+// CONFIG
 // ============================================
-const MEDIA_URLS = {
+var FLYER_DURATION = 8000;
+var MEDIA_DURATION = 8000;
+var BOARD_DURATION = 30000;
+var COMPANY_INFO_DURATION = 10000;
+
+var MEDIA_URLS = {
     IMAGEN_1: 'https://i.imgur.com/fy043jb.png',
     IMAGEN_2: 'https://i.imgur.com/yEf5Qyx.png',
     IMAGEN_EQUIPO: 'https://i.imgur.com/iX2pwMo.png'
 };
 
-// ============================================
-// INFORMACIÓN DE LA EMPRESA (avisos rotativos)
-// ============================================
-const COMPANY_INFO = [
-    { 
-        icon: '', 
-        title: 'EMPRESA INSCRITA EN', 
-        text: 'MINCETUR', 
-        logoPng: 'https://i.imgur.com/lWf49TO.png' 
-    },
-    { 
-        icon: '💎', 
-        title: 'RUC EMPRESARIAL', 
-        text: '20606424761' 
-    },
-    { 
-        icon: '🚀', 
-        title: '6 AÑOS DE', 
-        text: 'EXPERIENCIA' 
-    },
-    { 
-        icon: '📱', 
-        title: 'COTIZA POR WHATSAPP', 
-        text: '961 737 795' 
-    }
+var COMPANY_INFO = [
+    { icon: '', title: 'EMPRESA INSCRITA EN', text: 'MINCETUR', logoPng: 'https://i.imgur.com/lWf49TO.png' },
+    { icon: '💎', title: 'RUC EMPRESARIAL', text: '20606424761' },
+    { icon: '🚀', title: '6 AÑOS DE', text: 'EXPERIENCIA' },
+    { icon: '📱', title: 'COTIZA POR WHATSAPP', text: '961 737 795' }
 ];
 
-// ============================================
-// DESTINOS FLYERS (con imagen)
-// ============================================
-const FLYER_DESTINATIONS = [
-    {
-        origen: 'LIM',
-        destino: 'CUZ',
-        emoji: '🏔️',
-        nombre: 'CUSCO',
-        image: 'https://i.imgur.com/WY5Gzr6.png',
-        precio: 450,
-        moneda: 'PEN'
-    },
-    {
-        origen: 'LIM',
-        destino: 'AQP',
-        emoji: '🌋',
-        nombre: 'AREQUIPA',
-        image: 'https://i.imgur.com/bJy2sdd.png',
-        precio: 380,
-        moneda: 'PEN'
-    },
-    {
-        origen: 'LIM',
-        destino: 'PIU',
-        emoji: '🏖️',
-        nombre: 'PIURA',
-        image: 'https://i.imgur.com/lZQoxcJ.png',
-        precio: 280,
-        moneda: 'PEN'
-    },
-    {
-        origen: 'LIM',
-        destino: 'IQT',
-        emoji: '🌴',
-        nombre: 'IQUITOS',
-        image: 'https://i.imgur.com/1TZ07B6.png',
-        precio: 520,
-        moneda: 'PEN'
-    },
-    {
-        origen: 'LIM',
-        destino: 'MIA',
-        emoji: '🌴',
-        nombre: 'MIAMI',
-        image: 'https://i.imgur.com/Wkxahjw.png',
-        precio: 1160,
-        moneda: 'USD'
-    },
-    {
-        origen: 'LIM',
-        destino: 'MAD',
-        emoji: '🇪🇸',
-        nombre: 'MADRID',
-        image: 'https://i.imgur.com/D2HFJaq.png',
-        precio: 890,
-        moneda: 'USD'
-    }
+var FLYER_DESTINATIONS = [
+    { emoji: '🏔️', nombre: 'CUSCO', image: 'https://i.imgur.com/WY5Gzr6.png', precio: 450, moneda: 'PEN' },
+    { emoji: '🌋', nombre: 'AREQUIPA', image: 'https://i.imgur.com/bJy2sdd.png', precio: 380, moneda: 'PEN' },
+    { emoji: '🏖️', nombre: 'PIURA', image: 'https://i.imgur.com/lZQoxcJ.png', precio: 280, moneda: 'PEN' },
+    { emoji: '🌴', nombre: 'IQUITOS', image: 'https://i.imgur.com/1TZ07B6.png', precio: 520, moneda: 'PEN' },
+    { emoji: '🌴', nombre: 'MIAMI', image: 'https://i.imgur.com/Wkxahjw.png', precio: 1160, moneda: 'USD' },
+    { emoji: '🇪🇸', nombre: 'MADRID', image: 'https://i.imgur.com/D2HFJaq.png', precio: 890, moneda: 'USD' }
 ];
 
-// ============================================
-// TABLERO AEROPUERTO - OFERTAS
-// Página 1 y Página 2 (15s cada una = 30s total)
-// ============================================
-const BOARD_PAGE_1 = [
-    { emoji: '🏔️', ciudad: 'CUSCO',     codigo: 'CUZ', precio: 450,  moneda: 'PEN' },
-    { emoji: '🌋', ciudad: 'AREQUIPA',  codigo: 'AQP', precio: 380,  moneda: 'PEN' },
-    { emoji: '🏖️', ciudad: 'PIURA',     codigo: 'PIU', precio: 280,  moneda: 'PEN' },
-    { emoji: '🌴', ciudad: 'IQUITOS',   codigo: 'IQT', precio: 520,  moneda: 'PEN' },
-    { emoji: '🌿', ciudad: 'TARAPOTO',  codigo: 'TPP', precio: 350,  moneda: 'PEN' },
-    { emoji: '☀️', ciudad: 'TRUJILLO',  codigo: 'TRU', precio: 250,  moneda: 'PEN' },
+var BOARD_PAGE_1 = [
+    { emoji: '🏔️', ciudad: 'CUSCO', codigo: 'CUZ', precio: 450, moneda: 'PEN' },
+    { emoji: '🌋', ciudad: 'AREQUIPA', codigo: 'AQP', precio: 380, moneda: 'PEN' },
+    { emoji: '🏖️', ciudad: 'PIURA', codigo: 'PIU', precio: 280, moneda: 'PEN' },
+    { emoji: '🌴', ciudad: 'IQUITOS', codigo: 'IQT', precio: 520, moneda: 'PEN' },
+    { emoji: '🌿', ciudad: 'TARAPOTO', codigo: 'TPP', precio: 350, moneda: 'PEN' },
+    { emoji: '☀️', ciudad: 'TRUJILLO', codigo: 'TRU', precio: 250, moneda: 'PEN' }
 ];
 
-const BOARD_PAGE_2 = [
-    { emoji: '🌴', ciudad: 'MIAMI',     codigo: 'MIA', precio: 1160, moneda: 'USD' },
-    { emoji: '🇪🇸', ciudad: 'MADRID',    codigo: 'MAD', precio: 890,  moneda: 'USD' },
-    { emoji: '🏖️', ciudad: 'CANCÚN',    codigo: 'CUN', precio: 750,  moneda: 'USD' },
-    { emoji: '🇨🇴', ciudad: 'BOGOTÁ',    codigo: 'BOG', precio: 480,  moneda: 'USD' },
+var BOARD_PAGE_2 = [
+    { emoji: '🌴', ciudad: 'MIAMI', codigo: 'MIA', precio: 1160, moneda: 'USD' },
+    { emoji: '🇪🇸', ciudad: 'MADRID', codigo: 'MAD', precio: 890, moneda: 'USD' },
+    { emoji: '🏖️', ciudad: 'CANCÚN', codigo: 'CUN', precio: 750, moneda: 'USD' },
+    { emoji: '🇨🇴', ciudad: 'BOGOTÁ', codigo: 'BOG', precio: 480, moneda: 'USD' },
     { emoji: '🗽', ciudad: 'NUEVA YORK', codigo: 'JFK', precio: 1350, moneda: 'USD' },
-    { emoji: '🗼', ciudad: 'PARÍS',      codigo: 'CDG', precio: 980,  moneda: 'USD' },
+    { emoji: '🗼', ciudad: 'PARÍS', codigo: 'CDG', precio: 980, moneda: 'USD' }
+];
+
+var ROTATION_SEQUENCE = [
+    { type: 'flyer' }, { type: 'flyer' }, { type: 'board' },
+    { type: 'flyer' }, { type: 'media' }, { type: 'flyer' },
+    { type: 'flyer' }, { type: 'board' }, { type: 'media' },
+    { type: 'flyer' }, { type: 'media' }
 ];
 
 // ============================================
-// NOMBRES DE CIUDADES (referencia)
+// APP LOGIC
 // ============================================
-const CIUDADES_NOMBRES = {
-    'LIM': 'Lima',    'CUZ': 'Cusco',    'AQP': 'Arequipa',
-    'PIU': 'Piura',   'IQT': 'Iquitos',  'TRU': 'Trujillo',
-    'CIX': 'Chiclayo','TPP': 'Tarapoto', 'JUL': 'Juliaca',
-    'PEM': 'Pto Maldonado', 'TCQ': 'Tacna', 'TBP': 'Tumbes',
-    'CJA': 'Cajamarca', 'AYP': 'Ayacucho', 'PCL': 'Pucallpa',
-    'HUU': 'Huánuco', 'JAU': 'Huancayo', 'BOG': 'Bogotá',
-    'MDE': 'Medellín', 'CLO': 'Cali',    'CTG': 'Cartagena',
-    'UIO': 'Quito',   'GYE': 'Guayaquil','SCL': 'Santiago',
-    'EZE': 'Buenos Aires', 'GRU': 'São Paulo', 'GIG': 'Río de Janeiro',
-    'MIA': 'Miami',   'LAX': 'Los Ángeles', 'JFK': 'Nueva York',
-    'MCO': 'Orlando', 'MAD': 'Madrid',   'BCN': 'Barcelona',
-    'LHR': 'Londres', 'CDG': 'París',    'FCO': 'Roma',
-    'MXP': 'Milán',   'CUN': 'Cancún',   'PUJ': 'Punta Cana'
-};
+var sequenceIndex = 0;
+var flyerIndex = 0;
+var mediaIndex = 0;
+var companyInfoIndex = 0;
+var boardPageTimer = null;
 
-// ============================================
-// SECUENCIA DE ROTACIÓN
-// Tipos: 'flyer', 'board', 'media'
-// ============================================
-const ROTATION_SEQUENCE = [
-    { type: 'flyer' },
-    { type: 'flyer' },
-    { type: 'board' },
-    { type: 'flyer' },
-    { type: 'media' },
-    { type: 'flyer' },
-    { type: 'flyer' },
-    { type: 'board' },
-    { type: 'media' },
-    { type: 'flyer' },
-    { type: 'media' },
-];
+function getContainer() { return document.getElementById('displayContainer'); }
+function clearContainer() { var c = getContainer(); if (c) c.innerHTML = ''; }
+
+function formatMoney(v) {
+    return Number(v).toLocaleString('es-PE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+function renderFlyer() {
+    var dest = FLYER_DESTINATIONS[flyerIndex % FLYER_DESTINATIONS.length];
+    flyerIndex++;
+    var s = dest.moneda === 'PEN' ? 'S/' : '$';
+    getContainer().innerHTML =
+        '<div class="dynamic-content fade-in"><div class="destination-card">' +
+        '<img class="destination-image" src="' + dest.image + '" alt="' + dest.nombre + '">' +
+        '<div class="destination-info">' +
+        '<div class="destination-name">' + dest.emoji + ' ' + dest.nombre + '</div>' +
+        '<div class="destination-price">DESDE ' + s + formatMoney(dest.precio) + '</div>' +
+        '<div class="destination-note">Precio por persona • Solo Ida</div>' +
+        '</div></div></div>';
+}
+
+function renderMedia() {
+    var images = [MEDIA_URLS.IMAGEN_1, MEDIA_URLS.IMAGEN_EQUIPO, MEDIA_URLS.IMAGEN_2];
+    var url = images[mediaIndex % images.length];
+    mediaIndex++;
+    getContainer().innerHTML =
+        '<div class="dynamic-content fade-in"><div class="team-image-container">' +
+        '<img src="' + url + '" alt="Good Call Travel"></div></div>';
+}
+
+function renderBoard() {
+    var c = getContainer();
+    c.innerHTML =
+        '<div class="dynamic-content fade-in"><div class="airport-board">' +
+        '<div class="board-header"><span class="board-title">✈️ VUELOS DISPONIBLES</span></div>' +
+        '<div class="board-columns"><span class="board-col-label dest">DESTINO</span><span class="board-col-label price">DESDE</span></div>' +
+        '<div class="board-rows" id="boardRows"></div>' +
+        '<div class="board-page-indicator" id="boardPageIndicator"><div class="board-dot active" data-page="0"></div><div class="board-dot" data-page="1"></div></div>' +
+        '<div class="board-footer"><span class="board-footer-text">PRECIOS POR PERSONA • SUJETOS A DISPONIBILIDAD</span></div>' +
+        '</div></div>';
+    renderBoardPage(0);
+    boardPageTimer = setTimeout(function() { switchBoardPage(1); }, BOARD_DURATION / 2);
+}
+
+function renderBoardPage(p) {
+    var rows = document.getElementById('boardRows');
+    if (!rows) return;
+    var data = p === 0 ? BOARD_PAGE_1 : BOARD_PAGE_2;
+    document.querySelectorAll('.board-dot').forEach(function(d) {
+        d.classList.toggle('active', parseInt(d.dataset.page) === p);
+    });
+    var html = '';
+    data.forEach(function(item, i) {
+        var s = item.moneda === 'PEN' ? 'S/' : '$';
+        html += '<div class="board-row" style="animation-delay:' + (i * 0.12) + 's;">' +
+            '<div class="board-row-dest"><span class="board-emoji">' + item.emoji + '</span>' +
+            '<span class="board-city">' + item.ciudad + '</span>' +
+            '<span class="board-code">' + item.codigo + '</span></div>' +
+            '<div class="board-row-price"><span class="board-currency">' + s + '</span>' +
+            '<span class="board-amount">' + formatMoney(item.precio) + '</span></div></div>';
+    });
+    rows.innerHTML = html;
+    rows.classList.remove('fade-out');
+    rows.classList.add('fade-in');
+}
+
+function switchBoardPage(p) {
+    var rows = document.getElementById('boardRows');
+    if (!rows) return;
+    rows.classList.remove('fade-in');
+    rows.classList.add('fade-out');
+    setTimeout(function() { renderBoardPage(p); }, 400);
+}
+
+function renderAvisos() {
+    var container = document.getElementById('avisosContainer');
+    if (!container) return;
+    var info = COMPANY_INFO[companyInfoIndex % COMPANY_INFO.length];
+    var logo = info.logoPng ? '<img class="mincetur-logo" src="' + info.logoPng + '" alt="Logo" onerror="this.style.display=\'none\'">' : '';
+    var icon = info.icon ? '<div style="font-size:36px;margin-bottom:4px;">' + info.icon + '</div>' : '';
+    container.innerHTML =
+        '<div class="aviso-ruc"><div style="display:flex;align-items:center;justify-content:center;gap:14px;">' +
+        logo + '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;">' +
+        icon + '<div class="aviso-username">' + info.title + '</div>' +
+        '<div class="aviso-text">' + info.text + '</div></div></div></div>';
+}
+
+function getDuration(type) {
+    if (type === 'flyer') return FLYER_DURATION;
+    if (type === 'media') return MEDIA_DURATION;
+    if (type === 'board') return BOARD_DURATION;
+    return FLYER_DURATION;
+}
+
+function rotateNext() {
+    var step = ROTATION_SEQUENCE[sequenceIndex % ROTATION_SEQUENCE.length];
+    clearContainer();
+    if (boardPageTimer) { clearTimeout(boardPageTimer); boardPageTimer = null; }
+    if (step.type === 'flyer') renderFlyer();
+    else if (step.type === 'media') renderMedia();
+    else if (step.type === 'board') renderBoard();
+    sequenceIndex++;
+    setTimeout(rotateNext, getDuration(step.type));
+}
+
+function typewriterEffect() {
+    var title = document.querySelector('.main-title');
+    if (!title) return;
+    title.classList.remove('typing', 'glow');
+    void title.offsetWidth;
+    title.classList.add('typing');
+    setTimeout(function() {
+        title.classList.remove('typing');
+        title.classList.add('glow');
+        setTimeout(function() { title.classList.remove('glow'); }, 3000);
+    }, 4000);
+}
+
+// INIT
+renderAvisos();
+rotateNext();
+setInterval(function() { companyInfoIndex++; renderAvisos(); }, COMPANY_INFO_DURATION);
+setInterval(typewriterEffect, 60000);
+setTimeout(typewriterEffect, 500);
+</script>
+</body>
+</html>
