@@ -69,7 +69,7 @@ body {
 
 .video-placeholder {
     width: 85%;
-    height: 320px;
+    height: 420px;
     background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
     border-radius: 25px;
     border: 3px solid rgba(255, 193, 7, 0.5);
@@ -667,26 +667,29 @@ function rotateNext() {
 // INIT
 rotateNext();
 
-// REPRODUCIR AUDIO AUTOMÁTICAMENTE
-var audio = document.getElementById('backgroundAudio');
-if (audio) {
-    audio.volume = 0.7; // Volumen al 70%
-    
-    // Intentar reproducir inmediatamente
-    audio.play().catch(function(error) {
-        console.log('Esperando interacción del usuario para reproducir audio');
+// REPRODUCIR AUDIO AUTOMÁTICAMENTE - SIN NECESIDAD DE CLICK
+setTimeout(function() {
+    var audio = document.getElementById('backgroundAudio');
+    if (audio) {
+        audio.volume = 0.7;
+        audio.muted = false;
         
-        // Si falla, reproducir al primer click/touch
-        function playAudio() {
-            audio.play();
-            document.removeEventListener('click', playAudio);
-            document.removeEventListener('touchstart', playAudio);
+        // Intentar reproducir
+        var playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(function() {
+                console.log('Audio reproduciendo automáticamente');
+            }).catch(function(error) {
+                console.log('Error al reproducir audio:', error);
+                // Forzar reproducción después de un momento
+                setTimeout(function() {
+                    audio.play();
+                }, 1000);
+            });
         }
-        
-        document.addEventListener('click', playAudio);
-        document.addEventListener('touchstart', playAudio);
-    });
-}
+    }
+}, 500);
 </script>
 </body>
 </html>
