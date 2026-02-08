@@ -512,6 +512,11 @@ body {
 
     </div>
 
+<!-- AUDIO DE CLOUDFLARE (controlado por el panel) -->
+<audio id="cloudflareAudio" loop>
+    <source src="https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav" type="audio/wav">
+</audio>
+
 <script>
 // ============================================
 // CONFIG
@@ -665,19 +670,140 @@ rotateNext();
 
 console.log('=== Sistema iniciado ===');
 
-// El audio de Cloudflare NO puede reproducirse automáticamente por políticas del navegador
-// Solo usaremos el audio de YouTube
+// ============================================
+// SISTEMA DE COMUNICACIÓN CON CONTROLADOR
+// ============================================
+
+var youtubeIframe = document.getElementById('youtubeVideo');
+var cfAudio = document.getElementById('cloudflareAudio');
+
+// Escuchar comandos del controlador via localStorage
+window.addEventListener('storage', function(e) {
+    if (e.key !== 'overlayCommand') return;
+    
+    try {
+        var command = JSON.parse(e.newValue);
+        console.log('Comando recibido:', command);
+        
+        // Ejecutar comando
+        if (command.target === 'youtube' && youtubeIframe) {
+            executeYouTubeCommand(command.action, command.value);
+        } else if (command.target === 'cloudflare' && cfAudio) {
+            executeCloudflareCommand(command.action, command.value);
+        } else if (command.target === 'general') {
+            executeGeneralCommand(command.action, command.value);
+        }
+        
+        // Enviar confirmación
+        localStorage.setItem('overlayStatus', JSON.stringify({
+            timestamp: Date.now(),
+            message: 'Comando ejecutado: ' + command.action
+        }));
+    } catch(err) {
+        console.error('Error procesando comando:', err);
+    }
+});
+
+// Funciones para ejecutar comandos de YouTube
+function executeYouTubeCommand(action, value) {
+    if (!youtubeIframe || !youtubeIframe.contentWindow) return;
+    
+    var message = '';
+    
+    switch(action) {
+        case 'play':
+            message = '{"event":"command","func":"playVideo","args":[]}';
+            break;
+        case 'pause':
+            message = '{"event":"command","func":"pauseVideo","args":[]}';
+            break;
+        case 'restart':
+            youtubeIframe.contentWindow.postMessage('{"event":"command","func":"seekTo","args":[0,true]}', '*');
+            message = '{"event":"command","func":"playVideo","args":[]}';
+            break;
+        case 'volume':
+            message = '{"event":"command","func":"setVolume","args":[' + value + ']}';
+            break;
+        case 'mute':
+            message = '{"event":"command","func":"mute","args":[]}';
+            break;
+        case 'unmute':
+            message = '{"event":"command","func":"unMute","args":[]}';
+            break;
+    }
+    
+    if (message) {
+        youtubeIframe.contentWindow.postMessage(message, '*');
+        console.log('YouTube comando enviado:', action);
+    }
+}
+
+// Funciones para ejecutar comandos de Cloudflare
+function executeCloudflareCommand(action, value) {
+    if (!cfAudio) return;
+    
+    switch(action) {
+        case 'play':
+            cfAudio.play()
+                .then(() => console.log('Cloudflare audio playing'))
+                .catch(err => console.error('Error playing:', err));
+            break;
+        case 'stop':
+            cfAudio.pause();
+            cfAudio.currentTime = 0;
+            break;
+        case 'volume':
+            cfAudio.volume = value / 100;
+            break;
+        case 'mute':
+            cfAudio.muted = true;
+            break;
+        case 'unmute':
+            cfAudio.muted = false;
+            break;
+    }
+    
+    console.log('Cloudflare comando ejecutado:', action);
+}
+
+// Funciones para comandos generales
+function executeGeneralCommand(action, value) {
+    switch(action) {
+        case 'muteAll':
+            if (youtubeIframe) executeYouTubeCommand('mute');
+            if (cfAudio) cfAudio.muted = true;
+            break;
+        case 'unmuteAll':
+            if (youtubeIframe) executeYouTubeCommand('unmute');
+            if (cfAudio) cfAudio.muted = false;
+            break;
+    }
+    
+    console.log('Comando general ejecutado:', action);
+}
+
+// Inicializar audio de Cloudflare
+if (cfAudio) {
+    cfAudio.volume = 0.5;
+}
 
 // Unmute YouTube después de que arranque
 setTimeout(function() {
-    var iframe = document.getElementById('youtubeVideo');
-    if (iframe && iframe.contentWindow) {
+    if (youtubeIframe && youtubeIframe.contentWindow) {
         console.log('Activando sonido de YouTube...');
-        iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":[]}', '*');
-        iframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[30]}', '*');
+        youtubeIframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":[]}', '*');
+        youtubeIframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[30]}', '*');
         console.log('YouTube: unmute y volumen a 30');
     }
 }, 2000);
+
+// Notificar que el overlay está listo
+localStorage.setItem('overlayStatus', JSON.stringify({
+    timestamp: Date.now(),
+    message: 'Overlay iniciado y listo'
+}));
+
+console.log('Sistema de comunicación activado');
 </script>
 </body>
 </html>
