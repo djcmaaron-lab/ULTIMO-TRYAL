@@ -229,7 +229,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px;
+    padding: 0px;
 }
 
 .inciting-message, .example-intro {
@@ -478,7 +478,8 @@ body {
         <div class="video-section" id="videoSection">
             <div class="video-placeholder">
                 <iframe 
-                    src="https://www.youtube.com/embed/GksJ96z0xyE?autoplay=1&mute=0&loop=1&playlist=GksJ96z0xyE&controls=0&modestbranding=1&rel=0" 
+                    id="youtubeVideo"
+                    src="https://www.youtube.com/embed/GksJ96z0xyE?autoplay=1&mute=0&loop=1&playlist=GksJ96z0xyE&controls=0&modestbranding=1&rel=0&enablejsapi=1" 
                     allow="autoplay; encrypted-media" 
                     allowfullscreen>
                 </iframe>
@@ -667,85 +668,73 @@ function rotateNext() {
 // INIT
 rotateNext();
 
-// REPRODUCIR AUDIO DE CLOUDFLARE CON LOGS
-console.log('=== INICIANDO SISTEMA DE AUDIO ===');
+// MOSTRAR LOGS EN PANTALLA CON ALERT
+function showLog(msg) {
+    console.log(msg);
+    // Crear div de log visible
+    var logDiv = document.createElement('div');
+    logDiv.style.cssText = 'position:fixed;top:10px;left:10px;background:black;color:lime;padding:5px;font-size:12px;z-index:99999;max-width:300px;';
+    logDiv.textContent = msg;
+    document.body.appendChild(logDiv);
+    setTimeout(function() { logDiv.remove(); }, 3000);
+}
+
+showLog('=== INICIANDO SISTEMA DE AUDIO ===');
 
 var audio = document.getElementById('backgroundAudio');
-console.log('Audio element:', audio);
+showLog('Audio element: ' + (audio ? 'ENCONTRADO' : 'NO ENCONTRADO'));
 
 if (audio) {
-    console.log('Audio encontrado, verificando source...');
-    console.log('Audio src:', audio.querySelector('source').src);
+    var source = audio.querySelector('source');
+    showLog('Audio src: ' + (source ? source.src.substring(0, 50) + '...' : 'NO SOURCE'));
     
     // Configurar audio
-    audio.volume = 0.7;
+    audio.volume = 0.3; // Volumen bajo
     audio.loop = true;
     
-    console.log('Intentando cargar audio...');
+    showLog('Cargando audio...');
     audio.load();
     
-    // Evento cuando el audio está listo
     audio.addEventListener('canplay', function() {
-        console.log('✓ Audio cargado y listo para reproducir');
+        showLog('✓ Audio LISTO para reproducir');
     });
     
-    // Evento cuando el audio está cargando
     audio.addEventListener('loadstart', function() {
-        console.log('→ Cargando audio desde Cloudflare...');
+        showLog('→ Cargando desde Cloudflare...');
     });
     
-    // Evento de error
     audio.addEventListener('error', function(e) {
-        console.error('✗ ERROR al cargar audio:', e);
-        console.error('Audio error code:', audio.error ? audio.error.code : 'unknown');
-        console.error('Audio error message:', audio.error ? audio.error.message : 'unknown');
+        showLog('✗ ERROR: ' + (audio.error ? audio.error.code : 'unknown'));
     });
     
-    // Evento cuando empieza a reproducir
     audio.addEventListener('playing', function() {
-        console.log('♪ AUDIO REPRODUCIENDO ♪');
+        showLog('♪ REPRODUCIENDO ♪');
     });
     
-    // Evento cuando se pausa
-    audio.addEventListener('pause', function() {
-        console.log('⏸ Audio pausado');
-    });
-    
-    // Intentar reproducir después de un delay
+    // Intentar reproducir
     setTimeout(function() {
-        console.log('Intentando reproducir audio...');
+        showLog('Intentando play()...');
         var playPromise = audio.play();
         
         if (playPromise !== undefined) {
             playPromise.then(function() {
-                console.log('✓✓✓ AUDIO REPRODUCIENDO EXITOSAMENTE ✓✓✓');
+                showLog('✓✓✓ ÉXITO ✓✓✓');
             }).catch(function(error) {
-                console.error('✗✗✗ ERROR al reproducir:', error);
-                console.log('Reintentando en 2 segundos...');
+                showLog('✗ Error: ' + error.message);
                 
                 // Segundo intento
                 setTimeout(function() {
-                    console.log('Segundo intento de reproducción...');
-                    audio.play().then(function() {
-                        console.log('✓ Segundo intento exitoso');
-                    }).catch(function(err) {
-                        console.error('✗ Segundo intento falló:', err);
-                        
-                        // Tercer intento
-                        setTimeout(function() {
-                            console.log('Tercer intento...');
-                            audio.play();
-                        }, 2000);
+                    showLog('Reintentando...');
+                    audio.play().catch(function(err) {
+                        showLog('✗ Fallo 2: ' + err.message);
                     });
                 }, 2000);
             });
         }
     }, 1000);
 } else {
-    console.error('✗✗✗ NO SE ENCONTRÓ EL ELEMENTO DE AUDIO ✗✗✗');
+    showLog('✗✗✗ AUDIO ELEMENT NO EXISTE ✗✗✗');
 }
-
-console.log('=== SISTEMA DE AUDIO CONFIGURADO ===');
 </script>
 </body>
 </html>
