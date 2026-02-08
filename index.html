@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -18,27 +18,16 @@ body {
 }
 
 .bg-waves {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0.12;
-    z-index: 0;
+    position: fixed; width: 100%; height: 100%; top: 0; left: 0; opacity: 0.12; z-index: 0;
 }
 
 .wave {
-    position: absolute;
-    width: 200%;
-    height: 200%;
+    position: absolute; width: 200%; height: 200%;
     background: linear-gradient(45deg, transparent 40%, #FFC107 50%, transparent 60%);
     animation: wave 20s linear infinite;
 }
 
-.wave:nth-child(2) {
-    animation-delay: -7s;
-    opacity: 0.5;
-}
+.wave:nth-child(2) { animation-delay: -7s; opacity: 0.5; }
 
 @keyframes wave {
     0% { transform: rotate(0deg) translateX(-50%); }
@@ -46,67 +35,43 @@ body {
 }
 
 .container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    position: relative;
-    z-index: 2;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    padding: 15px; position: relative; z-index: 2;
 }
 
 /* VIDEO SECTION */
 .video-section {
-    margin-top: 180px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-top: 180px; margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center;
 }
 
 .video-placeholder {
-    width: 85%;
-    height: 420px;
+    width: 85%; height: 420px;
     background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
     border-radius: 25px;
     border: 3px solid rgba(255, 193, 7, 0.5);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
 }
 
-.video-placeholder iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 22px;
-}
+.video-placeholder iframe { width: 100%; height: 100%; border: none; border-radius: 22px; }
 
-.video-overlay-top,
-.video-overlay-bottom,
-.video-overlay-left,
-.video-overlay-right {
+.video-overlay-top, .video-overlay-bottom, .video-overlay-left, .video-overlay-right {
     position: absolute;
     background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
     z-index: 10;
 }
-
 .video-overlay-top { top: 0; left: 0; right: 0; height: 40px; }
 .video-overlay-bottom { bottom: 0; left: 0; right: 0; height: 50px; }
 .video-overlay-left { top: 40px; left: 0; bottom: 50px; width: 15px; }
 .video-overlay-right { top: 40px; right: 0; bottom: 50px; width: 15px; }
 
 .video-placeholder::before {
-    content: '';
-    position: absolute;
-    width: 200%;
-    height: 200%;
+    content: ''; position: absolute; width: 200%; height: 200%;
     background: linear-gradient(45deg, transparent 30%, rgba(100, 181, 246, 0.08) 50%, transparent 70%);
-    animation: shine 3s linear infinite;
-    pointer-events: none;
+    animation: shine 3s linear infinite; pointer-events: none;
 }
 
 @keyframes shine {
@@ -116,90 +81,56 @@ body {
 
 /* AVISOS */
 .avisos-section {
-    background: transparent;
-    padding: 0;
-    margin-bottom: 12px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
+    background: transparent; padding: 0; margin-bottom: 12px;
+    display: grid; grid-template-columns: 1fr; gap: 8px;
 }
 
 .aviso-ruc {
     background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
-    border-radius: 15px;
-    padding: 22px 18px;
+    border-radius: 15px; padding: 22px 18px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     border: 3px solid rgba(100, 181, 246, 0.6);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100px;
-    max-height: 100px;
-    overflow: hidden;
-    position: relative;
+    text-align: center; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100px; max-height: 100px; overflow: hidden; position: relative;
 }
 
 .aviso-ruc::before {
-    content: '';
-    position: absolute;
-    width: 200%;
-    height: 200%;
+    content: ''; position: absolute; width: 200%; height: 200%;
     background: linear-gradient(45deg, transparent 30%, rgba(100, 181, 246, 0.1) 50%, transparent 70%);
-    animation: shine 3s linear infinite;
-    pointer-events: none;
+    animation: shine 3s linear infinite; pointer-events: none;
 }
 
 .aviso-ruc .aviso-text {
-    font-size: 38px;
-    font-weight: 900;
-    color: #E3F2FD;
+    font-size: 38px; font-weight: 900; color: #E3F2FD;
     text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
-    letter-spacing: 0.5px;
-    line-height: 1.3;
+    letter-spacing: 0.5px; line-height: 1.3;
 }
 
-/* MIDDLE SECTION - ALTURA LIMITADA */
+/* MIDDLE SECTION - contenido centrado verticalmente */
 .middle-section {
-    position: relative;
-    overflow: hidden;
-    flex: 1;
-    max-height: 750px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative; overflow: hidden;
+    flex: 1; max-height: 780px; margin-top: 10px;
+    display: flex; align-items: flex-start; justify-content: center;
 }
 
 .flights-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0px;
+    position: relative; width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    justify-content: flex-start; align-items: center; padding: 0;
 }
 
 .dynamic-content {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0px;
+    position: relative; width: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center; padding: 0;
 }
 
 .inciting-message, .example-intro {
-    font-size: 48px;
-    font-weight: 900;
-    color: white;
+    font-size: 48px; font-weight: 900; color: white;
     text-shadow: 0 0 40px rgba(255, 193, 7, 1), 0 4px 15px rgba(0, 0, 0, 0.6);
-    animation: pulseIntro 2s ease-in-out infinite;
-    text-align: center;
+    animation: pulseIntro 2s ease-in-out infinite; text-align: center;
 }
 
 @keyframes pulseIntro {
@@ -209,96 +140,64 @@ body {
 
 /* DESTINATION CARD */
 .destination-card {
-    width: 100%;
-    max-width: calc(100% - 20px);
-    max-height: 740px;
+    width: 100%; max-width: calc(100% - 20px); max-height: 760px;
     background: linear-gradient(145deg, rgba(0, 86, 179, 0.98) 0%, rgba(0, 45, 90, 0.98) 100%);
-    border-radius: 20px;
-    overflow: hidden;
+    border-radius: 20px; overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     border: 3px solid rgba(255, 193, 7, 0.8);
     animation: destinationEnter 0.8s ease-out;
 }
 
-@keyframes destinationEnter {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-}
+@keyframes destinationEnter { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
 .destination-image { width: 100%; height: 400px; object-fit: contain; background: rgba(0, 0, 0, 0.2); }
-
 .destination-info { padding: 25px; text-align: center; }
 
 .destination-name {
-    font-size: 52px;
-    font-weight: 900;
-    color: #FFC107;
-    margin-bottom: 12px;
-    text-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
+    font-size: 52px; font-weight: 900; color: #FFC107;
+    margin-bottom: 12px; text-shadow: 0 0 20px rgba(255, 193, 7, 0.8);
 }
 
 .destination-price {
-    font-size: 64px;
-    font-weight: 900;
-    color: white;
+    font-size: 64px; font-weight: 900; color: white;
     text-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
 }
 
-.destination-note {
-    font-size: 22px;
-    color: rgba(255, 255, 255, 0.8);
-    margin-top: 8px;
-    font-weight: 600;
-}
+.destination-note { font-size: 22px; color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-weight: 600; }
 
-/* TEAM IMAGE - ALTURA LIMITADA */
+/* TEAM IMAGE - LIMITADO */
 .team-image-container {
-    width: 100%;
-    max-width: calc(100% - 20px);
-    max-height: 740px;
-    border-radius: 20px;
-    overflow: hidden;
+    width: 100%; max-width: calc(100% - 20px); max-height: 760px;
+    border-radius: 20px; overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     border: 3px solid rgba(255, 193, 7, 0.6);
 }
 
 .team-image-container img {
-    width: 100%;
-    height: 100%;
-    max-height: 740px;
-    object-fit: contain;
-    background: rgba(0, 0, 0, 0.2);
+    width: 100%; height: 100%; max-height: 760px;
+    object-fit: contain; background: rgba(0, 0, 0, 0.2);
 }
 
 /* AIRPORT BOARD */
 .airport-board {
-    width: 100%;
-    max-width: calc(100% - 20px);
+    width: 100%; max-width: calc(100% - 20px);
     background: linear-gradient(180deg, rgba(0, 10, 25, 0.97) 0%, rgba(0, 20, 45, 0.97) 100%);
-    border-radius: 20px;
-    overflow: hidden;
+    border-radius: 20px; overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 193, 7, 0.2);
     border: 3px solid rgba(255, 193, 7, 0.7);
-    animation: boardEnter 0.8s ease-out;
-    position: relative;
+    animation: boardEnter 0.8s ease-out; position: relative;
 }
 
 .airport-board::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.008) 3px, rgba(255,255,255,0.008) 4px);
-    pointer-events: none;
-    z-index: 1;
+    pointer-events: none; z-index: 1;
 }
 
 .airport-board::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 4px;
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
     background: linear-gradient(90deg, transparent, rgba(255, 193, 7, 0.6), transparent);
-    animation: boardScan 4s linear infinite;
-    z-index: 2;
+    animation: boardScan 4s linear infinite; z-index: 2;
 }
 
 @keyframes boardScan { 0% { top: 0; opacity: 1; } 100% { top: 100%; opacity: 0.3; } }
@@ -306,53 +205,32 @@ body {
 
 .board-header {
     background: linear-gradient(135deg, #FFC107 0%, #FFB300 100%);
-    padding: 22px 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    position: relative;
-    z-index: 3;
+    padding: 22px 30px; display: flex; align-items: center; justify-content: center;
+    gap: 16px; position: relative; z-index: 3;
 }
 
 .board-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 40px;
-    font-weight: 900;
-    color: #001F3F;
-    letter-spacing: 3px;
+    font-family: 'Montserrat', sans-serif; font-size: 40px; font-weight: 900;
+    color: #001F3F; letter-spacing: 3px;
 }
 
 .board-columns {
-    display: flex;
-    align-items: center;
-    padding: 14px 30px;
+    display: flex; align-items: center; padding: 14px 30px;
     background: rgba(255, 193, 7, 0.08);
     border-bottom: 2px solid rgba(255, 193, 7, 0.15);
-    position: relative;
-    z-index: 3;
+    position: relative; z-index: 3;
 }
 
-.board-col-label {
-    font-size: 16px;
-    font-weight: 800;
-    color: rgba(255, 193, 7, 0.6);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
+.board-col-label { font-size: 16px; font-weight: 800; color: rgba(255, 193, 7, 0.6); letter-spacing: 3px; text-transform: uppercase; }
 .board-col-label.dest { flex: 1; }
 .board-col-label.price { width: 240px; text-align: right; }
 
 .board-rows { padding: 8px 0; position: relative; z-index: 3; }
 
 .board-row {
-    display: flex;
-    align-items: center;
-    padding: 20px 30px;
+    display: flex; align-items: center; padding: 20px 30px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    opacity: 0;
-    transform: translateX(-30px);
+    opacity: 0; transform: translateX(-30px);
     animation: rowSlideIn 0.5s ease-out forwards;
 }
 
@@ -364,56 +242,27 @@ body {
 .board-row-dest { flex: 1; display: flex; align-items: center; gap: 18px; }
 .board-emoji { font-size: 38px; width: 50px; text-align: center; flex-shrink: 0; }
 
-.board-city {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 36px;
-    font-weight: 900;
-    color: #FFFFFF;
-    letter-spacing: 1px;
-}
+.board-city { font-family: 'Montserrat', sans-serif; font-size: 36px; font-weight: 900; color: #FFFFFF; letter-spacing: 1px; }
 
-.board-code {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    color: rgba(255, 193, 7, 0.5);
-    letter-spacing: 2px;
-    margin-left: 8px;
-}
+.board-code { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 800; color: rgba(255, 193, 7, 0.5); letter-spacing: 2px; margin-left: 8px; }
 
 .board-row-price { width: 240px; text-align: right; display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; }
 .board-currency { font-size: 24px; font-weight: 700; color: rgba(255, 193, 7, 0.8); }
 
 .board-amount {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 44px;
-    font-weight: 900;
-    color: #FFC107;
-    text-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
-    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif; font-size: 44px; font-weight: 900;
+    color: #FFC107; text-shadow: 0 0 20px rgba(255, 193, 7, 0.4); letter-spacing: 1px;
 }
 
 .board-page-indicator { display: flex; justify-content: center; gap: 10px; padding: 12px 0 6px; position: relative; z-index: 3; }
 
-.board-dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: rgba(255, 193, 7, 0.2);
-    transition: all 0.4s ease;
-}
+.board-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 193, 7, 0.2); transition: all 0.4s ease; }
 
-.board-dot.active {
-    background: #FFC107;
-    box-shadow: 0 0 10px rgba(255, 193, 7, 0.6);
-    transform: scale(1.3);
-}
+.board-dot.active { background: #FFC107; box-shadow: 0 0 10px rgba(255, 193, 7, 0.6); transform: scale(1.3); }
 
 .board-footer {
-    background: rgba(255, 193, 7, 0.06);
-    border-top: 2px solid rgba(255, 193, 7, 0.15);
-    padding: 16px 30px;
-    text-align: center;
-    position: relative;
-    z-index: 3;
+    background: rgba(255, 193, 7, 0.06); border-top: 2px solid rgba(255, 193, 7, 0.15);
+    padding: 16px 30px; text-align: center; position: relative; z-index: 3;
 }
 
 .board-footer-text { font-size: 20px; font-weight: 700; color: rgba(255, 255, 255, 0.5); letter-spacing: 2px; }
@@ -426,23 +275,24 @@ body {
 
 .fade-in { animation: fadeIn 0.6s ease-in; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* YOUTUBE AUDIO OCULTO - 1x1px fuera de vista */
+.yt-audio-hidden {
+    position: fixed; width: 1px; height: 1px;
+    top: -100px; left: -100px;
+    opacity: 0; pointer-events: none; z-index: -1;
+}
     </style>
 </head>
 <body>
-    <div class="bg-waves">
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
+    <div class="bg-waves"><div class="wave"></div><div class="wave"></div></div>
 
     <div class="container">
         <div class="video-section" id="videoSection">
             <div class="video-placeholder">
-                <iframe 
-                    id="youtubeVideo"
+                <iframe id="youtubeVideo"
                     src="https://www.youtube.com/embed/GksJ96z0xyE?autoplay=1&mute=1&loop=1&playlist=GksJ96z0xyE&controls=0&modestbranding=1&rel=0&enablejsapi=1" 
-                    allow="autoplay; encrypted-media" 
-                    allowfullscreen>
-                </iframe>
+                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <div class="video-overlay-top"></div>
                 <div class="video-overlay-bottom"></div>
                 <div class="video-overlay-left"></div>
@@ -451,12 +301,8 @@ body {
         </div>
 
         <div class="avisos-section" id="avisosContainer">
-            <div class="aviso-ruc">
-                <div class="aviso-text">💎 RUC EMPRESARIAL: 20606424761</div>
-            </div>
-            <div class="aviso-ruc">
-                <div class="aviso-text">📱 Cotizamos con descuento por WSP: 961737795</div>
-            </div>
+            <div class="aviso-ruc"><div class="aviso-text">💎 RUC EMPRESARIAL: 20606424761</div></div>
+            <div class="aviso-ruc"><div class="aviso-text">📱 Cotizamos con descuento por WSP: 961737795</div></div>
         </div>
 
         <div class="middle-section">
@@ -468,6 +314,11 @@ body {
         </div>
     </div>
 
+<!-- YOUTUBE AUDIO OCULTO - 1x1px, loop automático -->
+<iframe id="youtubeAudio" class="yt-audio-hidden"
+    src="https://www.youtube.com/embed/zypO4kQWlQI?autoplay=1&mute=1&loop=1&playlist=zypO4kQWlQI&controls=0&enablejsapi=1" 
+    allow="autoplay; encrypted-media"></iframe>
+
 <script>
 // ============================================
 // CONFIG
@@ -475,7 +326,6 @@ body {
 var FLYER_DURATION = 8000;
 var MEDIA_DURATION = 8000;
 var BOARD_DURATION = 30000;
-var CF_AUDIO_URL = 'https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav';
 
 var MEDIA_URLS = {
     IMAGEN_1: 'https://i.imgur.com/fy043jb.png',
@@ -518,84 +368,61 @@ var ROTATION_SEQUENCE = [
 ];
 
 // ============================================
-// ROTATION LOGIC
+// ROTATION
 // ============================================
-var sequenceIndex = 0;
-var flyerIndex = 0;
-var mediaIndex = 0;
-var boardPageTimer = null;
+var sequenceIndex = 0, flyerIndex = 0, mediaIndex = 0, boardPageTimer = null;
 
 function getContainer() { return document.getElementById('displayContainer'); }
 function clearContainer() { var c = getContainer(); if (c) c.innerHTML = ''; }
-
-function formatMoney(v) {
-    return Number(v).toLocaleString('es-PE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-}
+function formatMoney(v) { return Number(v).toLocaleString('es-PE', { minimumFractionDigits: 0, maximumFractionDigits: 0 }); }
 
 function renderFlyer() {
-    var dest = FLYER_DESTINATIONS[flyerIndex % FLYER_DESTINATIONS.length];
-    flyerIndex++;
+    var dest = FLYER_DESTINATIONS[flyerIndex % FLYER_DESTINATIONS.length]; flyerIndex++;
     var s = dest.moneda === 'PEN' ? 'S/' : '$';
     getContainer().innerHTML =
         '<div class="dynamic-content fade-in"><div class="destination-card">' +
         '<img class="destination-image" src="' + dest.image + '" alt="' + dest.nombre + '">' +
-        '<div class="destination-info">' +
-        '<div class="destination-name">' + dest.emoji + ' ' + dest.nombre + '</div>' +
+        '<div class="destination-info"><div class="destination-name">' + dest.emoji + ' ' + dest.nombre + '</div>' +
         '<div class="destination-price">DESDE ' + s + formatMoney(dest.precio) + '</div>' +
-        '<div class="destination-note">Precio por persona • Solo Ida</div>' +
-        '</div></div></div>';
+        '<div class="destination-note">Precio por persona • Solo Ida</div></div></div></div>';
 }
 
 function renderMedia() {
     var images = [MEDIA_URLS.IMAGEN_1, MEDIA_URLS.IMAGEN_EQUIPO, MEDIA_URLS.IMAGEN_2];
-    var url = images[mediaIndex % images.length];
-    mediaIndex++;
+    var url = images[mediaIndex % images.length]; mediaIndex++;
     getContainer().innerHTML =
         '<div class="dynamic-content fade-in"><div class="team-image-container">' +
         '<img src="' + url + '" alt="Good Call Travel"></div></div>';
 }
 
 function renderBoard() {
-    var c = getContainer();
-    c.innerHTML =
+    getContainer().innerHTML =
         '<div class="dynamic-content fade-in"><div class="airport-board">' +
         '<div class="board-header"><span class="board-title">✈️ VUELOS DISPONIBLES</span></div>' +
         '<div class="board-columns"><span class="board-col-label dest">DESTINO</span><span class="board-col-label price">DESDE</span></div>' +
         '<div class="board-rows" id="boardRows"></div>' +
         '<div class="board-page-indicator" id="boardPageIndicator"><div class="board-dot active" data-page="0"></div><div class="board-dot" data-page="1"></div></div>' +
-        '<div class="board-footer"><span class="board-footer-text">PRECIOS POR PERSONA • SUJETOS A DISPONIBILIDAD</span></div>' +
-        '</div></div>';
+        '<div class="board-footer"><span class="board-footer-text">PRECIOS POR PERSONA • SUJETOS A DISPONIBILIDAD</span></div></div></div>';
     renderBoardPage(0);
     boardPageTimer = setTimeout(function() { switchBoardPage(1); }, BOARD_DURATION / 2);
 }
 
 function renderBoardPage(p) {
-    var rows = document.getElementById('boardRows');
-    if (!rows) return;
+    var rows = document.getElementById('boardRows'); if (!rows) return;
     var data = p === 0 ? BOARD_PAGE_1 : BOARD_PAGE_2;
-    document.querySelectorAll('.board-dot').forEach(function(d) {
-        d.classList.toggle('active', parseInt(d.dataset.page) === p);
-    });
+    document.querySelectorAll('.board-dot').forEach(function(d) { d.classList.toggle('active', parseInt(d.dataset.page) === p); });
     var html = '';
     data.forEach(function(item, i) {
         var s = item.moneda === 'PEN' ? 'S/' : '$';
-        html += '<div class="board-row" style="animation-delay:' + (i * 0.12) + 's;">' +
-            '<div class="board-row-dest"><span class="board-emoji">' + item.emoji + '</span>' +
-            '<span class="board-city">' + item.ciudad + '</span>' +
-            '<span class="board-code">' + item.codigo + '</span></div>' +
-            '<div class="board-row-price"><span class="board-currency">' + s + '</span>' +
-            '<span class="board-amount">' + formatMoney(item.precio) + '</span></div></div>';
+        html += '<div class="board-row" style="animation-delay:' + (i * 0.12) + 's;"><div class="board-row-dest"><span class="board-emoji">' + item.emoji + '</span><span class="board-city">' + item.ciudad + '</span><span class="board-code">' + item.codigo + '</span></div><div class="board-row-price"><span class="board-currency">' + s + '</span><span class="board-amount">' + formatMoney(item.precio) + '</span></div></div>';
     });
     rows.innerHTML = html;
-    rows.classList.remove('fade-out');
-    rows.classList.add('fade-in');
+    rows.classList.remove('fade-out'); rows.classList.add('fade-in');
 }
 
 function switchBoardPage(p) {
-    var rows = document.getElementById('boardRows');
-    if (!rows) return;
-    rows.classList.remove('fade-in');
-    rows.classList.add('fade-out');
+    var rows = document.getElementById('boardRows'); if (!rows) return;
+    rows.classList.remove('fade-in'); rows.classList.add('fade-out');
     setTimeout(function() { renderBoardPage(p); }, 400);
 }
 
@@ -618,201 +445,61 @@ function rotateNext() {
 }
 
 // ============================================
-// AUDIO - CLOUDFLARE (Web Audio API + fallback)
+// YOUTUBE CONTROL
 // ============================================
-var cfGainNode = null;
-var cfSourceNode = null;
-var cfAudioCtx = null;
-var cfAudioBuffer = null;
-var cfIsPlaying = false;
+var ytVideo = document.getElementById('youtubeVideo');
+var ytAudio = document.getElementById('youtubeAudio');
 
-function startCloudflareAudio() {
-    if (cfIsPlaying) return;
-    
-    try {
-        cfAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        cfGainNode = cfAudioCtx.createGain();
-        cfGainNode.gain.value = 0.5;
-        cfGainNode.connect(cfAudioCtx.destination);
-        
-        console.log('[CF-AUDIO] AudioContext creado, descargando audio...');
-        
-        fetch(CF_AUDIO_URL)
-            .then(function(response) {
-                console.log('[CF-AUDIO] Audio descargado, decodificando...');
-                return response.arrayBuffer();
-            })
-            .then(function(data) {
-                return cfAudioCtx.decodeAudioData(data);
-            })
-            .then(function(buffer) {
-                cfAudioBuffer = buffer;
-                console.log('[CF-AUDIO] Audio decodificado, reproduciendo...');
-                playCfBuffer();
-            })
-            .catch(function(err) {
-                console.log('[CF-AUDIO] Error Web Audio API:', err.message);
-                // Fallback: intentar con <audio> element
-                fallbackAudioElement();
-            });
-    } catch(err) {
-        console.log('[CF-AUDIO] Error creando AudioContext:', err.message);
-        fallbackAudioElement();
+function ytCmd(iframe, func, args) {
+    if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func: func, args: args || [] }), '*');
     }
 }
 
-function playCfBuffer() {
-    if (!cfAudioBuffer || !cfAudioCtx || !cfGainNode) return;
-    
-    // Si hay un source anterior, desconectar
-    if (cfSourceNode) {
-        try { cfSourceNode.stop(); } catch(e) {}
-    }
-    
-    cfSourceNode = cfAudioCtx.createBufferSource();
-    cfSourceNode.buffer = cfAudioBuffer;
-    cfSourceNode.loop = true;
-    cfSourceNode.connect(cfGainNode);
-    cfSourceNode.start(0);
-    cfIsPlaying = true;
-    console.log('[CF-AUDIO] *** REPRODUCIENDO ***');
-}
-
-function stopCfAudio() {
-    if (cfSourceNode) {
-        try { cfSourceNode.stop(); } catch(e) {}
-        cfIsPlaying = false;
-        console.log('[CF-AUDIO] Detenido');
-    }
-}
-
-function setCfVolume(vol) {
-    if (cfGainNode) {
-        cfGainNode.gain.value = vol;
-        console.log('[CF-AUDIO] Volumen:', vol);
-    }
-}
-
-// Fallback con elemento <audio>
-function fallbackAudioElement() {
-    console.log('[CF-AUDIO] Intentando fallback con <audio> element...');
-    var audio = document.createElement('audio');
-    audio.src = CF_AUDIO_URL;
-    audio.loop = true;
-    audio.volume = 0.5;
-    audio.autoplay = true;
-    document.body.appendChild(audio);
-    
-    audio.play().then(function() {
-        console.log('[CF-AUDIO] Fallback <audio> funcionó!');
-        cfIsPlaying = true;
-    }).catch(function(err) {
-        console.log('[CF-AUDIO] Fallback <audio> también falló:', err.message);
-        console.log('[CF-AUDIO] Esperando comando del controlador...');
-    });
-}
-
-// ============================================
-// AUDIO - YOUTUBE
-// ============================================
-var ytIframe = document.getElementById('youtubeVideo');
-
-function ytCommand(func, args) {
-    if (ytIframe && ytIframe.contentWindow) {
-        ytIframe.contentWindow.postMessage(JSON.stringify({
-            event: 'command',
-            func: func,
-            args: args || []
-        }), '*');
-    }
-}
-
-// Unmute YouTube después de 3 segundos
+// Unmute ambos después de 3s
 setTimeout(function() {
-    ytCommand('unMute');
-    ytCommand('setVolume', [30]);
-    console.log('[YT-AUDIO] Unmute + volumen 30');
+    ytCmd(ytVideo, 'unMute'); ytCmd(ytVideo, 'setVolume', [30]);
+    ytCmd(ytAudio, 'unMute'); ytCmd(ytAudio, 'setVolume', [50]);
+    console.log('[INIT] Video vol=30, Audio vol=50');
 }, 3000);
 
 // ============================================
-// POLLING AL SERVIDOR PARA RECIBIR COMANDOS
+// POLLING COMANDOS
 // ============================================
 var lastCommandId = 0;
 
 function pollCommands() {
-    fetch('/command')
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-            if (data && data.id && data.id > lastCommandId) {
-                lastCommandId = data.id;
-                executeCommand(data);
-            }
-        })
-        .catch(function() {
-            // Silencioso - el servidor puede no estar listo
-        });
+    fetch('/command').then(function(r) { return r.json(); }).then(function(data) {
+        if (data && data.id && data.id > lastCommandId) {
+            lastCommandId = data.id;
+            executeCommand(data);
+        }
+    }).catch(function() {});
 }
 
 function executeCommand(cmd) {
-    console.log('[CMD] Recibido:', cmd.action, cmd.target);
-    
-    if (cmd.target === 'cloudflare') {
-        switch(cmd.action) {
-            case 'play':
-                if (!cfIsPlaying) startCloudflareAudio();
-                else if (cfAudioCtx && cfAudioCtx.state === 'suspended') {
-                    cfAudioCtx.resume().then(function() {
-                        console.log('[CF-AUDIO] AudioContext resumed');
-                    });
-                }
-                break;
-            case 'stop':
-                stopCfAudio();
-                break;
-            case 'volume':
-                setCfVolume((cmd.value || 50) / 100);
-                break;
-        }
-    } else if (cmd.target === 'youtube') {
-        switch(cmd.action) {
-            case 'play':
-                ytCommand('playVideo');
-                ytCommand('unMute');
-                break;
-            case 'pause':
-                ytCommand('pauseVideo');
-                break;
-            case 'restart':
-                ytCommand('seekTo', [0, true]);
-                ytCommand('playVideo');
-                break;
-            case 'volume':
-                ytCommand('setVolume', [cmd.value || 30]);
-                break;
-            case 'mute':
-                ytCommand('mute');
-                break;
-            case 'unmute':
-                ytCommand('unMute');
-                break;
-        }
+    console.log('[CMD]', cmd.target, cmd.action, cmd.value);
+    var iframe = cmd.target === 'video' ? ytVideo : (cmd.target === 'audio' ? ytAudio : null);
+    if (!iframe) return;
+
+    switch(cmd.action) {
+        case 'play':    ytCmd(iframe, 'playVideo'); ytCmd(iframe, 'unMute'); break;
+        case 'pause':   ytCmd(iframe, 'pauseVideo'); break;
+        case 'restart': ytCmd(iframe, 'seekTo', [0, true]); ytCmd(iframe, 'playVideo'); break;
+        case 'volume':  ytCmd(iframe, 'setVolume', [cmd.value || 30]); break;
+        case 'mute':    ytCmd(iframe, 'mute'); break;
+        case 'unmute':  ytCmd(iframe, 'unMute'); break;
+        case 'seek':    ytCmd(iframe, 'seekTo', [cmd.value || 0, true]); break;
     }
 }
 
-// Polling cada 500ms
 setInterval(pollCommands, 500);
 
 // ============================================
 // INIT
 // ============================================
 rotateNext();
-
-// Intentar reproducir audio de Cloudflare automáticamente
-setTimeout(startCloudflareAudio, 1000);
-
-console.log('=== Good Call Travel Overlay v3.0 ===');
-console.log('Audio CF: Web Audio API + fallback + controlador');
-console.log('Polling comandos: activo');
+console.log('=== Good Call Travel v4.0 ===');
 </script>
 </body>
 </html>
