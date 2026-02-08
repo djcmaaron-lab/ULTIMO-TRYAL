@@ -3,404 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controlador - Good Call Travel</title>
+    <title>🎮 Controlador - Good Call Travel</title>
     <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.control-panel {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-    border: 2px solid #FFC107;
-    max-width: 500px;
-    width: 100%;
-}
-
-.panel-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #FFC107;
-    text-align: center;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.control-section {
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 193, 7, 0.2);
-}
-
-.control-section:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
-.section-label {
-    font-size: 14px;
-    color: rgba(255, 193, 7, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-    font-weight: bold;
-}
-
-.button-group {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.control-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 15px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.control-btn:active {
-    transform: scale(0.95);
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #FFC107 0%, #FFB300 100%);
-    color: #001F3F;
-    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
-}
-
-.btn-primary:hover {
-    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.6);
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background: linear-gradient(135deg, #0056B3 0%, #003D7A 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 86, 179, 0.4);
-}
-
-.btn-secondary:hover {
-    box-shadow: 0 6px 20px rgba(0, 86, 179, 0.6);
-    transform: translateY(-2px);
-}
-
-.btn-danger {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
-}
-
-.btn-danger:hover {
-    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6);
-    transform: translateY(-2px);
-}
-
-.volume-control {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.volume-label {
-    font-size: 14px;
-    color: white;
-    min-width: 100px;
-}
-
-.volume-slider {
-    flex: 1;
-    height: 8px;
-    border-radius: 5px;
-    background: rgba(255, 193, 7, 0.2);
-    outline: none;
-    -webkit-appearance: none;
-}
-
-.volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #FFC107;
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(255, 193, 7, 0.5);
-}
-
-.volume-slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #FFC107;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 10px rgba(255, 193, 7, 0.5);
-}
-
-.volume-value {
-    font-size: 16px;
-    color: #FFC107;
-    font-weight: bold;
-    min-width: 40px;
-    text-align: center;
-}
-
-.status-indicator {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    font-size: 14px;
-    color: #4CAF50;
-    text-align: center;
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.status-error {
-    color: #ff4444;
-}
-
-.status-warning {
-    color: #FFC107;
-}
-
-.info-box {
-    background: rgba(255, 193, 7, 0.1);
-    border: 1px solid rgba(255, 193, 7, 0.3);
-    border-radius: 10px;
-    padding: 12px;
-    margin-top: 15px;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.5;
-}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #FFC107;
+        }
+        .section {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #333;
+        }
+        .section h2 {
+            font-size: 16px;
+            color: #aaa;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        button {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.1s;
+            flex: 1;
+            min-width: 120px;
+        }
+        button:active {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+        .btn-play { background: #4CAF50; color: white; }
+        .btn-stop { background: #f44336; color: white; }
+        .btn-action { background: #2196F3; color: white; }
+        .btn-mute { background: #FF9800; color: white; }
+        
+        .volume-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .volume-row label {
+            font-size: 14px;
+            color: #aaa;
+            min-width: 60px;
+        }
+        .volume-row input[type="range"] {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #333;
+            border-radius: 4px;
+            outline: none;
+        }
+        .volume-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #FFC107;
+            cursor: pointer;
+        }
+        .volume-row span {
+            font-size: 14px;
+            min-width: 40px;
+            text-align: right;
+            color: #FFC107;
+        }
+        
+        #status {
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+            color: #666;
+            margin-top: 10px;
+        }
+        #status.ok { color: #4CAF50; }
+        #status.err { color: #f44336; }
     </style>
 </head>
 <body>
-    <div class="control-panel">
-        <div class="panel-title">🎮 Control Panel</div>
-        
-        <!-- YouTube Controls -->
-        <div class="control-section">
-            <div class="section-label">📺 YouTube Video</div>
-            <div class="button-group">
-                <button class="control-btn btn-primary" onclick="playYouTube()">▶️ Play</button>
-                <button class="control-btn btn-secondary" onclick="pauseYouTube()">⏸️ Pause</button>
-                <button class="control-btn btn-secondary" onclick="restartYouTube()">🔁 Restart</button>
-            </div>
-            <div class="volume-control" style="margin-top: 15px;">
-                <span class="volume-label">Volumen YT:</span>
-                <input type="range" class="volume-slider" id="ytVolume" min="0" max="100" value="30" oninput="setYouTubeVolume(this.value)">
-                <span class="volume-value" id="ytVolumeValue">30</span>
-            </div>
+    <h1>🎮 CONTROLADOR OVERLAY</h1>
+
+    <!-- CLOUDFLARE AUDIO -->
+    <div class="section">
+        <h2>🎵 Audio Cloudflare (WAV)</h2>
+        <div class="buttons">
+            <button class="btn-play" onclick="send('cloudflare','play')">▶ Reproducir</button>
+            <button class="btn-stop" onclick="send('cloudflare','stop')">⏹ Detener</button>
         </div>
-
-        <!-- Audio Cloudflare Controls -->
-        <div class="control-section">
-            <div class="section-label">🎵 Audio Cloudflare</div>
-            <div class="button-group">
-                <button class="control-btn btn-primary" onclick="playCloudflareAudio()">▶️ Reproducir</button>
-                <button class="control-btn btn-danger" onclick="stopCloudflareAudio()">⏹️ Detener</button>
-            </div>
-            <div class="volume-control" style="margin-top: 15px;">
-                <span class="volume-label">Volumen Audio:</span>
-                <input type="range" class="volume-slider" id="cfVolume" min="0" max="100" value="50" oninput="setCloudflareVolume(this.value)">
-                <span class="volume-value" id="cfVolumeValue">50</span>
-            </div>
-        </div>
-
-        <!-- General Controls -->
-        <div class="control-section">
-            <div class="section-label">⚙️ Controles Generales</div>
-            <div class="button-group">
-                <button class="control-btn btn-secondary" onclick="muteAll()">🔇 Silenciar Todo</button>
-                <button class="control-btn btn-secondary" onclick="unmuteAll()">🔊 Activar Todo</button>
-            </div>
-        </div>
-
-        <!-- Status -->
-        <div class="status-indicator" id="status">Esperando acción...</div>
-
-        <!-- Info -->
-        <div class="info-box">
-            💡 <strong>Nota:</strong> Este panel te permite controlar el overlay que ves en TikTok. Los usuarios del live solo verán el contenido, no estos controles.
+        <div class="volume-row">
+            <label>Volumen:</label>
+            <input type="range" min="0" max="100" value="50" id="cfVol" oninput="send('cloudflare','volume',this.value); document.getElementById('cfVolLabel').textContent=this.value+'%'">
+            <span id="cfVolLabel">50%</span>
         </div>
     </div>
 
-    <!-- Audio Element for Cloudflare -->
-    <audio id="cloudflareAudio" loop>
-        <source src="https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav" type="audio/wav">
-    </audio>
+    <!-- YOUTUBE -->
+    <div class="section">
+        <h2>📺 YouTube</h2>
+        <div class="buttons">
+            <button class="btn-play" onclick="send('youtube','play')">▶ Play</button>
+            <button class="btn-stop" onclick="send('youtube','pause')">⏸ Pause</button>
+            <button class="btn-action" onclick="send('youtube','restart')">🔁 Restart</button>
+        </div>
+        <div class="buttons" style="margin-top:10px;">
+            <button class="btn-mute" onclick="send('youtube','mute')">🔇 Mute</button>
+            <button class="btn-play" onclick="send('youtube','unmute')">🔊 Unmute</button>
+        </div>
+        <div class="volume-row">
+            <label>Volumen:</label>
+            <input type="range" min="0" max="100" value="30" id="ytVol" oninput="send('youtube','volume',this.value); document.getElementById('ytVolLabel').textContent=this.value+'%'">
+            <span id="ytVolLabel">30%</span>
+        </div>
+    </div>
+
+    <div id="status">Esperando conexión...</div>
 
     <script>
-// Referencias
-const cfAudio = document.getElementById('cloudflareAudio');
-const status = document.getElementById('status');
-
-function updateStatus(message, type = 'success') {
-    status.textContent = message;
-    status.className = 'status-indicator';
-    if (type === 'error') status.classList.add('status-error');
-    if (type === 'warning') status.classList.add('status-warning');
-}
-
-// ============================================
-// SISTEMA DE COMUNICACIÓN CON OVERLAY
-// ============================================
-
-function sendCommandToOverlay(target, action, value = null) {
-    const command = {
-        target: target,
-        action: action,
-        value: value,
-        timestamp: Date.now()
-    };
+    var statusEl = document.getElementById('status');
     
-    // Enviar comando via localStorage
-    localStorage.setItem('overlayCommand', JSON.stringify(command));
-    
-    console.log('Comando enviado:', command);
-}
-
-// Escuchar respuestas del overlay
-window.addEventListener('storage', function(e) {
-    if (e.key === 'overlayStatus' && e.newValue) {
-        try {
-            const status = JSON.parse(e.newValue);
-            updateStatus('📡 ' + status.message);
-        } catch(err) {
-            console.error('Error leyendo status:', err);
-        }
-    }
-});
-
-// ============================================
-// YOUTUBE CONTROLS
-// ============================================
-
-function playYouTube() {
-    sendCommandToOverlay('youtube', 'play');
-    updateStatus('▶️ YouTube: Play');
-}
-
-function pauseYouTube() {
-    sendCommandToOverlay('youtube', 'pause');
-    updateStatus('⏸️ YouTube: Pause');
-}
-
-function restartYouTube() {
-    sendCommandToOverlay('youtube', 'restart');
-    updateStatus('🔁 YouTube: Reiniciando');
-}
-
-function setYouTubeVolume(value) {
-    document.getElementById('ytVolumeValue').textContent = value;
-    sendCommandToOverlay('youtube', 'volume', parseInt(value));
-    updateStatus('🔊 YouTube volumen: ' + value);
-}
-
-// ============================================
-// CLOUDFLARE AUDIO CONTROLS
-// ============================================
-
-function playCloudflareAudio() {
-    // Primero reproducir local para activar
-    if (cfAudio) {
-        cfAudio.play()
-            .then(() => {
-                // Luego enviar comando al overlay
-                sendCommandToOverlay('cloudflare', 'play');
-                updateStatus('▶️ Audio Cloudflare reproduciendo');
-            })
-            .catch((error) => {
-                updateStatus('✗ Error: ' + error.message, 'error');
-            });
-    } else {
-        // Solo enviar comando al overlay
-        sendCommandToOverlay('cloudflare', 'play');
-        updateStatus('▶️ Comando enviado al overlay');
-    }
-}
-
-function stopCloudflareAudio() {
-    if (cfAudio) {
-        cfAudio.pause();
-        cfAudio.currentTime = 0;
-    }
-    sendCommandToOverlay('cloudflare', 'stop');
-    updateStatus('⏹️ Audio detenido');
-}
-
-function setCloudflareVolume(value) {
-    document.getElementById('cfVolumeValue').textContent = value;
-    
-    if (cfAudio) {
-        cfAudio.volume = value / 100;
+    function send(target, action, value) {
+        var body = { target: target, action: action };
+        if (value !== undefined) body.value = parseInt(value);
+        
+        fetch('/command', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            statusEl.textContent = '✅ ' + target + ' → ' + action + (value ? ' (' + value + ')' : '') + ' — ' + new Date().toLocaleTimeString();
+            statusEl.className = 'ok';
+        })
+        .catch(function(err) {
+            statusEl.textContent = '❌ Error: ' + err.message;
+            statusEl.className = 'err';
+        });
     }
     
-    sendCommandToOverlay('cloudflare', 'volume', parseInt(value));
-    updateStatus('🔊 Volumen: ' + value);
-}
-
-// ============================================
-// GENERAL CONTROLS
-// ============================================
-
-function muteAll() {
-    sendCommandToOverlay('general', 'muteAll');
-    if (cfAudio) cfAudio.muted = true;
-    updateStatus('🔇 Todo silenciado');
-}
-
-function unmuteAll() {
-    sendCommandToOverlay('general', 'unmuteAll');
-    if (cfAudio) cfAudio.muted = false;
-    updateStatus('🔊 Audio activado');
-}
-
-// ============================================
-// INIT
-// ============================================
-
-// Configurar audio inicial
-if (cfAudio) {
-    cfAudio.volume = 0.5;
-}
-
-updateStatus('✅ Panel listo - Esperando overlay...');
-
-// Verificar conexión con overlay
-setTimeout(function() {
-    sendCommandToOverlay('general', 'ping');
-}, 1000);
-
-console.log('Control Panel iniciado con localStorage');
-console.log('Abre el overlay en otra pestaña del MISMO NAVEGADOR');
+    // Verificar conexión al servidor
+    fetch('/command')
+        .then(function() {
+            statusEl.textContent = '✅ Conectado al servidor';
+            statusEl.className = 'ok';
+        })
+        .catch(function() {
+            statusEl.textContent = '❌ No se puede conectar al servidor';
+            statusEl.className = 'err';
+        });
     </script>
 </body>
 </html>
