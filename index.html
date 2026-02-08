@@ -159,6 +159,43 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* FOOTER WSP - NUEVO RECTANGULO ABAJO */
+.footer-wsp {
+    background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
+    border-radius: 15px;
+    padding: 22px 18px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    border: 3px solid rgba(100, 181, 246, 0.6);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+    position: relative;
+    margin-top: 12px;
+}
+
+.footer-wsp::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(100, 181, 246, 0.1) 50%, transparent 70%);
+    animation: shine 3s linear infinite;
+    pointer-events: none;
+}
+
+.footer-wsp .wsp-text {
+    font-size: 38px;
+    font-weight: 900;
+    color: #E3F2FD;
+    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.5px;
+    animation: fadeInSlow 1s ease-in-out;
+    line-height: 1.3;
+}
+
 /* MIDDLE SECTION */
 .middle-section {
     flex: 1;
@@ -440,10 +477,10 @@ body {
             </div>
         </div>
 
-        <!-- AVISO FIJO - SOLO WHATSAPP -->
+        <!-- AVISO FIJO - RUC EMPRESARIAL -->
         <div class="avisos-section" id="avisosContainer">
             <div class="aviso-ruc">
-                <div class="aviso-text">📱 Cotizamos al WSP: 961737795</div>
+                <div class="aviso-text">💎 RUC EMPRESARIAL: 20606424761</div>
             </div>
         </div>
 
@@ -453,6 +490,11 @@ body {
                     <div class="inciting-message">🔥 ¡COMENTA TU VUELO AHORA!</div>
                 </div>
             </div>
+        </div>
+
+        <!-- FOOTER WSP - NUEVO RECTANGULO ABAJO -->
+        <div class="footer-wsp">
+            <div class="wsp-text">📱 Cotizamos con descuento por WSP: 961737795</div>
         </div>
 
 
