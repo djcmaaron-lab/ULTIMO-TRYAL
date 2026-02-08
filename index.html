@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -6,9 +6,6 @@
     <title>Good Call Travel - Overlay</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <style>
-/* ============================================
-   GOOD CALL TRAVEL - OVERLAY STYLES v2.0
-   ============================================ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -88,7 +85,6 @@ body {
     border-radius: 22px;
 }
 
-/* OVERLAYS PARA OCULTAR ELEMENTOS DE YOUTUBE */
 .video-overlay-top,
 .video-overlay-bottom,
 .video-overlay-left,
@@ -98,21 +94,10 @@ body {
     z-index: 10;
 }
 
-.video-overlay-top {
-    top: 0; left: 0; right: 0; height: 40px;
-}
-
-.video-overlay-bottom {
-    bottom: 0; left: 0; right: 0; height: 50px;
-}
-
-.video-overlay-left {
-    top: 40px; left: 0; bottom: 50px; width: 15px;
-}
-
-.video-overlay-right {
-    top: 40px; right: 0; bottom: 50px; width: 15px;
-}
+.video-overlay-top { top: 0; left: 0; right: 0; height: 40px; }
+.video-overlay-bottom { bottom: 0; left: 0; right: 0; height: 50px; }
+.video-overlay-left { top: 40px; left: 0; bottom: 50px; width: 15px; }
+.video-overlay-right { top: 40px; right: 0; bottom: 50px; width: 15px; }
 
 .video-placeholder::before {
     content: '';
@@ -124,15 +109,9 @@ body {
     pointer-events: none;
 }
 
-.video-icon {
-    font-size: 100px;
-    opacity: 0.4;
-    animation: videoPulse 3s ease-in-out infinite;
-}
-
-@keyframes videoPulse {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.1); opacity: 0.6; }
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
 }
 
 /* AVISOS */
@@ -172,36 +151,30 @@ body {
     pointer-events: none;
 }
 
-@keyframes shine {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-}
-
 .aviso-ruc .aviso-text {
     font-size: 38px;
     font-weight: 900;
     color: #E3F2FD;
     text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
     letter-spacing: 0.5px;
-    animation: fadeInSlow 1s ease-in-out;
     line-height: 1.3;
 }
 
-@keyframes fadeInSlow {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* MIDDLE SECTION */
+/* MIDDLE SECTION - ALTURA LIMITADA */
 .middle-section {
     position: relative;
     overflow: hidden;
-    margin-bottom: 0px;
+    flex: 1;
+    max-height: 750px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .flights-wrapper {
     position: relative;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -238,6 +211,7 @@ body {
 .destination-card {
     width: 100%;
     max-width: calc(100% - 20px);
+    max-height: 740px;
     background: linear-gradient(145deg, rgba(0, 86, 179, 0.98) 0%, rgba(0, 45, 90, 0.98) 100%);
     border-radius: 20px;
     overflow: hidden;
@@ -277,18 +251,24 @@ body {
     font-weight: 600;
 }
 
-/* TEAM IMAGE */
+/* TEAM IMAGE - ALTURA LIMITADA */
 .team-image-container {
     width: 100%;
     max-width: calc(100% - 20px);
-    aspect-ratio: 9/16;
+    max-height: 740px;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     border: 3px solid rgba(255, 193, 7, 0.6);
 }
 
-.team-image-container img { width: 100%; height: 100%; object-fit: contain; background: rgba(0, 0, 0, 0.2); }
+.team-image-container img {
+    width: 100%;
+    height: 100%;
+    max-height: 740px;
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.2);
+}
 
 /* AIRPORT BOARD */
 .airport-board {
@@ -364,11 +344,7 @@ body {
 .board-col-label.dest { flex: 1; }
 .board-col-label.price { width: 240px; text-align: right; }
 
-.board-rows {
-    padding: 8px 0;
-    position: relative;
-    z-index: 3;
-}
+.board-rows { padding: 8px 0; position: relative; z-index: 3; }
 
 .board-row {
     display: flex;
@@ -406,7 +382,6 @@ body {
 }
 
 .board-row-price { width: 240px; text-align: right; display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; }
-
 .board-currency { font-size: 24px; font-weight: 700; color: rgba(255, 193, 7, 0.8); }
 
 .board-amount {
@@ -449,7 +424,6 @@ body {
 @keyframes boardFadeOut { to { opacity: 0; transform: translateY(-10px); } }
 @keyframes boardFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* UTILITIES */
 .fade-in { animation: fadeIn 0.6s ease-in; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
@@ -461,7 +435,6 @@ body {
     </div>
 
     <div class="container">
-        <!-- VIDEO SECTION -->
         <div class="video-section" id="videoSection">
             <div class="video-placeholder">
                 <iframe 
@@ -477,7 +450,6 @@ body {
             </div>
         </div>
 
-        <!-- AVISOS -->
         <div class="avisos-section" id="avisosContainer">
             <div class="aviso-ruc">
                 <div class="aviso-text">💎 RUC EMPRESARIAL: 20606424761</div>
@@ -496,11 +468,6 @@ body {
         </div>
     </div>
 
-<!-- AUDIO DE CLOUDFLARE - autoplay + loop -->
-<audio id="cloudflareAudio" autoplay loop preload="auto">
-    <source src="https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav" type="audio/wav">
-</audio>
-
 <script>
 // ============================================
 // CONFIG
@@ -508,6 +475,7 @@ body {
 var FLYER_DURATION = 8000;
 var MEDIA_DURATION = 8000;
 var BOARD_DURATION = 30000;
+var CF_AUDIO_URL = 'https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav';
 
 var MEDIA_URLS = {
     IMAGEN_1: 'https://i.imgur.com/fy043jb.png',
@@ -550,7 +518,7 @@ var ROTATION_SEQUENCE = [
 ];
 
 // ============================================
-// APP LOGIC
+// ROTATION LOGIC
 // ============================================
 var sequenceIndex = 0;
 var flyerIndex = 0;
@@ -650,53 +618,201 @@ function rotateNext() {
 }
 
 // ============================================
-// AUDIO INITIALIZATION
+// AUDIO - CLOUDFLARE (Web Audio API + fallback)
 // ============================================
+var cfGainNode = null;
+var cfSourceNode = null;
+var cfAudioCtx = null;
+var cfAudioBuffer = null;
+var cfIsPlaying = false;
 
-// 1. Audio de Cloudflare - reproducir automáticamente
-var cfAudio = document.getElementById('cloudflareAudio');
-cfAudio.volume = 0.5; // 50% volumen
+function startCloudflareAudio() {
+    if (cfIsPlaying) return;
+    
+    try {
+        cfAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        cfGainNode = cfAudioCtx.createGain();
+        cfGainNode.gain.value = 0.5;
+        cfGainNode.connect(cfAudioCtx.destination);
+        
+        console.log('[CF-AUDIO] AudioContext creado, descargando audio...');
+        
+        fetch(CF_AUDIO_URL)
+            .then(function(response) {
+                console.log('[CF-AUDIO] Audio descargado, decodificando...');
+                return response.arrayBuffer();
+            })
+            .then(function(data) {
+                return cfAudioCtx.decodeAudioData(data);
+            })
+            .then(function(buffer) {
+                cfAudioBuffer = buffer;
+                console.log('[CF-AUDIO] Audio decodificado, reproduciendo...');
+                playCfBuffer();
+            })
+            .catch(function(err) {
+                console.log('[CF-AUDIO] Error Web Audio API:', err.message);
+                // Fallback: intentar con <audio> element
+                fallbackAudioElement();
+            });
+    } catch(err) {
+        console.log('[CF-AUDIO] Error creando AudioContext:', err.message);
+        fallbackAudioElement();
+    }
+}
 
-// Intentar reproducir inmediatamente
-cfAudio.play().then(function() {
-    console.log('[AUDIO] Cloudflare audio reproduciendo OK');
-}).catch(function(err) {
-    console.log('[AUDIO] Cloudflare primer intento falló:', err.message);
-    // Reintentar cada 2 segundos (por si el navegador necesita un momento)
-    var retryCount = 0;
-    var retryInterval = setInterval(function() {
-        retryCount++;
-        cfAudio.play().then(function() {
-            console.log('[AUDIO] Cloudflare audio reproduciendo OK (intento ' + retryCount + ')');
-            clearInterval(retryInterval);
-        }).catch(function(e) {
-            console.log('[AUDIO] Cloudflare reintento ' + retryCount + ' falló:', e.message);
-            if (retryCount >= 10) {
-                console.log('[AUDIO] Cloudflare: se agotaron los reintentos');
-                clearInterval(retryInterval);
-            }
-        });
-    }, 2000);
-});
+function playCfBuffer() {
+    if (!cfAudioBuffer || !cfAudioCtx || !cfGainNode) return;
+    
+    // Si hay un source anterior, desconectar
+    if (cfSourceNode) {
+        try { cfSourceNode.stop(); } catch(e) {}
+    }
+    
+    cfSourceNode = cfAudioCtx.createBufferSource();
+    cfSourceNode.buffer = cfAudioBuffer;
+    cfSourceNode.loop = true;
+    cfSourceNode.connect(cfGainNode);
+    cfSourceNode.start(0);
+    cfIsPlaying = true;
+    console.log('[CF-AUDIO] *** REPRODUCIENDO ***');
+}
 
-// 2. YouTube - arrancar muted, luego unmute con volumen bajo
+function stopCfAudio() {
+    if (cfSourceNode) {
+        try { cfSourceNode.stop(); } catch(e) {}
+        cfIsPlaying = false;
+        console.log('[CF-AUDIO] Detenido');
+    }
+}
+
+function setCfVolume(vol) {
+    if (cfGainNode) {
+        cfGainNode.gain.value = vol;
+        console.log('[CF-AUDIO] Volumen:', vol);
+    }
+}
+
+// Fallback con elemento <audio>
+function fallbackAudioElement() {
+    console.log('[CF-AUDIO] Intentando fallback con <audio> element...');
+    var audio = document.createElement('audio');
+    audio.src = CF_AUDIO_URL;
+    audio.loop = true;
+    audio.volume = 0.5;
+    audio.autoplay = true;
+    document.body.appendChild(audio);
+    
+    audio.play().then(function() {
+        console.log('[CF-AUDIO] Fallback <audio> funcionó!');
+        cfIsPlaying = true;
+    }).catch(function(err) {
+        console.log('[CF-AUDIO] Fallback <audio> también falló:', err.message);
+        console.log('[CF-AUDIO] Esperando comando del controlador...');
+    });
+}
+
+// ============================================
+// AUDIO - YOUTUBE
+// ============================================
 var ytIframe = document.getElementById('youtubeVideo');
 
-setTimeout(function() {
+function ytCommand(func, args) {
     if (ytIframe && ytIframe.contentWindow) {
-        // Unmute
-        ytIframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":[]}', '*');
-        // Volumen al 30%
-        ytIframe.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[30]}', '*');
-        console.log('[AUDIO] YouTube: unmute + volumen 30');
+        ytIframe.contentWindow.postMessage(JSON.stringify({
+            event: 'command',
+            func: func,
+            args: args || []
+        }), '*');
     }
+}
+
+// Unmute YouTube después de 3 segundos
+setTimeout(function() {
+    ytCommand('unMute');
+    ytCommand('setVolume', [30]);
+    console.log('[YT-AUDIO] Unmute + volumen 30');
 }, 3000);
+
+// ============================================
+// POLLING AL SERVIDOR PARA RECIBIR COMANDOS
+// ============================================
+var lastCommandId = 0;
+
+function pollCommands() {
+    fetch('/command')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data && data.id && data.id > lastCommandId) {
+                lastCommandId = data.id;
+                executeCommand(data);
+            }
+        })
+        .catch(function() {
+            // Silencioso - el servidor puede no estar listo
+        });
+}
+
+function executeCommand(cmd) {
+    console.log('[CMD] Recibido:', cmd.action, cmd.target);
+    
+    if (cmd.target === 'cloudflare') {
+        switch(cmd.action) {
+            case 'play':
+                if (!cfIsPlaying) startCloudflareAudio();
+                else if (cfAudioCtx && cfAudioCtx.state === 'suspended') {
+                    cfAudioCtx.resume().then(function() {
+                        console.log('[CF-AUDIO] AudioContext resumed');
+                    });
+                }
+                break;
+            case 'stop':
+                stopCfAudio();
+                break;
+            case 'volume':
+                setCfVolume((cmd.value || 50) / 100);
+                break;
+        }
+    } else if (cmd.target === 'youtube') {
+        switch(cmd.action) {
+            case 'play':
+                ytCommand('playVideo');
+                ytCommand('unMute');
+                break;
+            case 'pause':
+                ytCommand('pauseVideo');
+                break;
+            case 'restart':
+                ytCommand('seekTo', [0, true]);
+                ytCommand('playVideo');
+                break;
+            case 'volume':
+                ytCommand('setVolume', [cmd.value || 30]);
+                break;
+            case 'mute':
+                ytCommand('mute');
+                break;
+            case 'unmute':
+                ytCommand('unMute');
+                break;
+        }
+    }
+}
+
+// Polling cada 500ms
+setInterval(pollCommands, 500);
 
 // ============================================
 // INIT
 // ============================================
 rotateNext();
-console.log('=== Good Call Travel Overlay v2.0 iniciado ===');
+
+// Intentar reproducir audio de Cloudflare automáticamente
+setTimeout(startCloudflareAudio, 1000);
+
+console.log('=== Good Call Travel Overlay v3.0 ===');
+console.log('Audio CF: Web Audio API + fallback + controlador');
+console.log('Polling comandos: activo');
 </script>
 </body>
 </html>
