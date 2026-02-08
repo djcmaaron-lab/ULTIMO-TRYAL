@@ -88,6 +88,44 @@ body {
     border-radius: 22px;
 }
 
+/* OVERLAYS PARA OCULTAR ELEMENTOS DE YOUTUBE */
+.video-overlay-top,
+.video-overlay-bottom,
+.video-overlay-left,
+.video-overlay-right {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(0, 86, 179, 0.95) 0%, rgba(0, 61, 122, 0.95) 100%);
+    z-index: 10;
+}
+
+.video-overlay-top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+}
+
+.video-overlay-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+
+.video-overlay-left {
+    top: 40px;
+    left: 0;
+    bottom: 50px;
+    width: 15px;
+}
+
+.video-overlay-right {
+    top: 40px;
+    right: 0;
+    bottom: 50px;
+    width: 15px;
+}
+
 .video-placeholder::before {
     content: '';
     position: absolute;
@@ -225,7 +263,7 @@ body {
     to { opacity: 1; transform: scale(1); }
 }
 
-.destination-image { width: 100%; height: 400px; object-fit: cover; }
+.destination-image { width: 100%; height: 400px; object-fit: contain; background: rgba(0, 0, 0, 0.2); }
 
 .destination-info { padding: 25px; text-align: center; }
 
@@ -262,7 +300,7 @@ body {
     border: 3px solid rgba(255, 193, 7, 0.6);
 }
 
-.team-image-container img { width: 100%; height: 100%; object-fit: cover; }
+.team-image-container img { width: 100%; height: 100%; object-fit: contain; background: rgba(0, 0, 0, 0.2); }
 
 /* AIRPORT BOARD */
 .airport-board {
@@ -444,6 +482,11 @@ body {
                     allow="autoplay; encrypted-media" 
                     allowfullscreen>
                 </iframe>
+                <!-- Overlays para ocultar elementos de YouTube -->
+                <div class="video-overlay-top"></div>
+                <div class="video-overlay-bottom"></div>
+                <div class="video-overlay-left"></div>
+                <div class="video-overlay-right"></div>
             </div>
         </div>
 
@@ -469,7 +512,7 @@ body {
     </div>
 
 <!-- AUDIO EN BUCLE -->
-<audio id="backgroundAudio" loop>
+<audio id="backgroundAudio" loop autoplay>
     <source src="https://pub-d86ac54743004e8d90296d5fc835af83.r2.dev/videos/jueves%20(3).wav" type="audio/wav">
 </audio>
 
@@ -625,15 +668,25 @@ function rotateNext() {
 rotateNext();
 
 // REPRODUCIR AUDIO AUTOMÁTICAMENTE
-document.addEventListener('DOMContentLoaded', function() {
-    var audio = document.getElementById('backgroundAudio');
-    if (audio) {
-        audio.volume = 0.5; // Volumen al 50%
-        audio.play().catch(function(error) {
-            console.log('No se pudo reproducir el audio automáticamente:', error);
-        });
-    }
-});
+var audio = document.getElementById('backgroundAudio');
+if (audio) {
+    audio.volume = 0.7; // Volumen al 70%
+    
+    // Intentar reproducir inmediatamente
+    audio.play().catch(function(error) {
+        console.log('Esperando interacción del usuario para reproducir audio');
+        
+        // Si falla, reproducir al primer click/touch
+        function playAudio() {
+            audio.play();
+            document.removeEventListener('click', playAudio);
+            document.removeEventListener('touchstart', playAudio);
+        }
+        
+        document.addEventListener('click', playAudio);
+        document.addEventListener('touchstart', playAudio);
+    });
+}
 </script>
 </body>
 </html>
