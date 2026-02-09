@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
+  <title>Soundboard - ANGEL</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow: hidden;
+    }
+    .wrap {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+    }
+    .btn {
+      width: min(520px, 80vw);
+      height: 140px;
+      border: 0;
+      border-radius: 22px;
+      font-size: 44px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.80);
+      color: #fff;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      transition: transform .08s, opacity .08s;
+    }
+    .btn:active { transform: scale(0.98); opacity: 0.92; }
+
+    .status {
+      position: fixed;
+      left: 14px;
+      bottom: 12px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      font-size: 14px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <button class="btn" id="angelBtn">ANGEL</button>
+  </div>
+  <div class="status" id="status">Listo</div>
+
+  <audio id="player" preload="auto"></audio>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const btn = document.getElementById("angelBtn");
+    const player = document.getElementById("player");
+
+    // Drive file: https://drive.google.com/file/d/1RDIl5iYewT2vdQErE2NbFK76GC6pH6Lx/view
+    const ANGEL_URL = "https://drive.google.com/uc?export=download&id=1RDIl5iYewT2vdQErE2NbFK76GC6pH6Lx";
+
+    function setStatus(msg){ statusEl.textContent = msg; }
+
+    async function playUrl(url, label){
+      try {
+        player.pause();
+        player.currentTime = 0;
+        player.src = url;
+        setStatus("Cargando " + label + "...");
+        await player.play();
+        setStatus("▶ Sonando: " + label);
+      } catch (e) {
+        setStatus("❌ No reproduce: " + (e?.message || e));
+      }
+    }
+
+    // Botón manual de prueba
+    btn.addEventListener("click", () => playUrl(ANGEL_URL, "ANGEL"));
+
+    // (Preparado para futuro) escuchar comandos del backend por polling a /command
+    // Si luego quieres que el backend dispare audio, esto ya está listo.
+    let lastId = 0;
+    async function poll(){
+      try{
+        const r = await fetch("/command", { cache: "no-store" });
+        const cmd = await r.json();
+
+        // Esperamos comandos tipo:
+        // { id, target:"sfx", action:"play", value:"ANGEL" }
+        // o { id, target:"sfx", action:"stop" }
+        if (cmd?.id && cmd.id > lastId) {
+          lastId = cmd.id;
+
+          if (cmd.target === "sfx") {
+            if (cmd.action === "play") {
+              const name = String(cmd.value || "").toUpperCase();
+              if (name === "ANGEL") playUrl(ANGEL_URL, "ANGEL");
+              else setStatus("⚠️ Nombre no mapeado: " + name);
+            }
+            if (cmd.action === "stop") {
+              player.pause();
+              player.currentTime = 0;
+              setStatus("⏹️ Parado");
+            }
+          }
+        }
+      } catch(_) {}
+      setTimeout(poll, 300);
+    }
+    poll();
+
+    player.addEventListener("ended", () => setStatus("✅ Terminado"));
+    player.addEventListener("error", () => setStatus("❌ Error cargando audio (Drive/permisos)"));
+  </script>
+</body>
+</html>
